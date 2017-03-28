@@ -18,7 +18,7 @@ interface PhotosContract {
 
     void showProgressBar();
 
-    void hideProgrssBar();
+    void hideProgressBar();
 
     void showErrorMessage();
 

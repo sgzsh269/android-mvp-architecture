@@ -3,11 +3,20 @@ package com.sagarnileshshah.carouselmvp.data.models.comment;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.sagarnileshshah.carouselmvp.data.local.LocalDatabase;
+import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
 
-public class Comment {
+
+@Table(database = LocalDatabase.class, allFields = true)
+public class Comment extends BaseModel {
 
     @SerializedName("id")
     @Expose
+    @PrimaryKey
     private String id;
     @SerializedName("author")
     @Expose
@@ -39,6 +48,9 @@ public class Comment {
     @SerializedName("_content")
     @Expose
     private String content;
+
+    @ForeignKey(stubbedRelationship = true)
+    private Photo photo;
 
     public String getId() {
         return id;
@@ -126,6 +138,14 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
+    public Photo getPhoto() {
+        return photo;
     }
 
 }

@@ -30,13 +30,13 @@ public class PhotosPresenter implements PhotosContract.Presenter {
       @Override public void onSuccess(List<Photo> photos) {
         if (view != null) {
           view.showPhotos(photos);
-          view.hideProgrssBar();
+          view.hideProgressBar();
         }
       }
 
       @Override public void onFailure(Throwable throwable) {
         if (view != null) {
-          view.hideProgrssBar();
+          view.hideProgressBar();
           view.showErrorMessage();
         }
       }

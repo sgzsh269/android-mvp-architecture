@@ -10,13 +10,22 @@ import android.net.NetworkInfo;
 
 public class NetworkHelper {
 
-  public static boolean isInternetAvailable(Context context){
-    ConnectivityManager connectivityManager =
-        (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    private static NetworkHelper networkHelper;
 
-    NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-    boolean isConnected = activeNetwork != null &&
-        activeNetwork.isConnectedOrConnecting();
-    return isConnected;
-  }
+    public static synchronized NetworkHelper getInstance() {
+        if (networkHelper == null) {
+            networkHelper = new NetworkHelper();
+        }
+        return networkHelper;
+    }
+
+    public boolean isInternetAvailable(Context context) {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
+    }
 }

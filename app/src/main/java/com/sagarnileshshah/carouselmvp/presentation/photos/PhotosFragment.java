@@ -16,11 +16,15 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import com.raizlabs.android.dbflow.config.DatabaseDefinition;
+import com.raizlabs.android.dbflow.config.FlowManager;
 import com.sagarnileshshah.carouselmvp.R;
 import com.sagarnileshshah.carouselmvp.data.DataRepository;
 import com.sagarnileshshah.carouselmvp.data.local.LocalDataSource;
+import com.sagarnileshshah.carouselmvp.data.local.LocalDatabase;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
 import com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource;
+import com.sagarnileshshah.carouselmvp.di.Injection;
 import com.sagarnileshshah.carouselmvp.presentation.photodetail.PhotoDetailFragment;
 import com.sagarnileshshah.carouselmvp.util.ItemClickSupport;
 import com.sagarnileshshah.carouselmvp.util.Properties;
@@ -57,9 +61,8 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
         photos = new ArrayList<>();
         ThreadExecutor threadExecutor = ThreadExecutor.getInstance();
         MainUiThread mainUiThread = MainUiThread.getInstance();
-        RemoteDataSource remoteDataSource = RemoteDataSource.getInstance(mainUiThread, threadExecutor);
-        LocalDataSource localDataSource = LocalDataSource.getInstance(mainUiThread, threadExecutor);
-        DataRepository dataRepository = DataRepository.getInstance(remoteDataSource, localDataSource);
+        DatabaseDefinition databaseDefinition = FlowManager.getDatabase(LocalDatabase.class);
+        DataRepository dataRepository = Injection.provideDataRepository(mainUiThread, threadExecutor, databaseDefinition);
         presenter = new PhotosPresenter(this, dataRepository, threadExecutor, mainUiThread);
         isCreated = true;
     }
@@ -129,7 +132,7 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     }
 
     @Override
-    public void hideProgrssBar() {
+    public void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
 
     }

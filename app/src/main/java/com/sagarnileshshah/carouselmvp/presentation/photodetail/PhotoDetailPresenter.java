@@ -29,20 +29,24 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
     }
 
     @Override
-    public void getComments(String photoId) {
+    public void getComments(Photo photo) {
         view.showProgressBar();
 
-        dataRepository.getComments(view.getContext(), photoId, new DataSource.GetCommentsCallback() {
+        dataRepository.getComments(view.getContext(), photo, new DataSource.GetCommentsCallback() {
             @Override
             public void onSuccess(List<Comment> comments) {
-                view.showComments(comments);
-                view.hideProgressBar();
+                if (view != null) {
+                    view.showComments(comments);
+                    view.hideProgressBar();
+                }
             }
 
             @Override
             public void onFailure(Throwable throwable) {
-                view.hideProgressBar();
-                view.showErrorMessage();
+                if (view != null) {
+                    view.hideProgressBar();
+                    view.showErrorMessage();
+                }
             }
         });
     }

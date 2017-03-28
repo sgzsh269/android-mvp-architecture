@@ -28,7 +28,7 @@ interface PhotoDetailContract {
 
     interface Presenter {
 
-        void getComments(String photoId);
+        void getComments(Photo photo);
 
         void onPause();
 

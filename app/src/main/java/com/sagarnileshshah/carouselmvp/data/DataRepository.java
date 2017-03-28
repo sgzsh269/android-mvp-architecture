@@ -12,30 +12,34 @@ import java.util.List;
 
 public class DataRepository {
 
-    private RemoteDataSource remoteDataSource;
-    private LocalDataSource localDataSource;
+    private DataSource remoteDataSource;
+    private DataSource localDataSource;
+    private NetworkHelper networkHelper;
+
     private static DataRepository dataRepository;
 
-    public DataRepository(RemoteDataSource remoteDataSource, LocalDataSource localDataSource) {
+    public DataRepository(DataSource remoteDataSource, DataSource localDataSource, NetworkHelper networkHelper) {
         this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;
+        this.networkHelper = networkHelper;
     }
 
-    public static synchronized DataRepository getInstance(RemoteDataSource remoteDataSource,
-                                                          LocalDataSource localDataSource) {
+    public static synchronized DataRepository getInstance(DataSource remoteDataSource,
+                                                          DataSource localDataSource,
+                                                          NetworkHelper networkHelper) {
         if (dataRepository == null) {
-            dataRepository = new DataRepository(remoteDataSource, localDataSource);
+            dataRepository = new DataRepository(remoteDataSource, localDataSource, networkHelper);
         }
         return dataRepository;
     }
 
     public void getPhotos(Context context, int page, final DataSource.GetPhotosCallback callback) {
-        if (NetworkHelper.isInternetAvailable(context)) {
+        if (networkHelper.isInternetAvailable(context)) {
             remoteDataSource.getPhotos(page, new DataSource.GetPhotosCallback() {
                 @Override
                 public void onSuccess(List<Photo> photos) {
                     callback.onSuccess(photos);
-                    localDataSource.storePhotos(photos);
+                    ((LocalDataSource) localDataSource).storePhotos(photos);
                 }
 
                 @Override
@@ -48,12 +52,13 @@ public class DataRepository {
         }
     }
 
-    public void getComments(Context context, String photoId, final DataSource.GetCommentsCallback callback) {
-        if (NetworkHelper.isInternetAvailable(context)) {
-            remoteDataSource.getComments(photoId, new DataSource.GetCommentsCallback() {
+    public void getComments(Context context, final Photo photo, final DataSource.GetCommentsCallback callback) {
+        if (networkHelper.isInternetAvailable(context)) {
+            remoteDataSource.getComments(photo.getId(), new DataSource.GetCommentsCallback() {
                 @Override
                 public void onSuccess(List<Comment> comments) {
                     callback.onSuccess(comments);
+                    ((LocalDataSource) localDataSource).storeComments(photo, comments);
                 }
 
                 @Override
@@ -62,7 +67,11 @@ public class DataRepository {
                 }
             });
         } else {
-            localDataSource.getComments(photoId, callback);
+            localDataSource.getComments(photo.getId(), callback);
         }
+    }
+
+    public void destroyInstance() {
+        dataRepository = null;
     }
 }

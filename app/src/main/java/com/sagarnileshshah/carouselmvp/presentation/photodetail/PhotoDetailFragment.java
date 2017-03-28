@@ -3,6 +3,8 @@ package com.sagarnileshshah.carouselmvp.presentation.photodetail;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,12 +20,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import com.bumptech.glide.Glide;
+import com.raizlabs.android.dbflow.config.DatabaseDefinition;
+import com.raizlabs.android.dbflow.config.FlowManager;
 import com.sagarnileshshah.carouselmvp.R;
 import com.sagarnileshshah.carouselmvp.data.DataRepository;
 import com.sagarnileshshah.carouselmvp.data.local.LocalDataSource;
+import com.sagarnileshshah.carouselmvp.data.local.LocalDatabase;
 import com.sagarnileshshah.carouselmvp.data.models.comment.Comment;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
 import com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource;
+import com.sagarnileshshah.carouselmvp.di.Injection;
 import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosPresenter;
 import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosRecyclerAdapter;
 import com.sagarnileshshah.carouselmvp.util.EndlessRecyclerViewScrollListener;
@@ -69,9 +75,8 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
         }
         ThreadExecutor threadExecutor = ThreadExecutor.getInstance();
         MainUiThread mainUiThread = MainUiThread.getInstance();
-        RemoteDataSource remoteDataSource = RemoteDataSource.getInstance(mainUiThread, threadExecutor);
-        LocalDataSource localDataSource = LocalDataSource.getInstance(mainUiThread, threadExecutor);
-        DataRepository dataRepository = DataRepository.getInstance(remoteDataSource, localDataSource);
+        DatabaseDefinition databaseDefinition = FlowManager.getDatabase(LocalDatabase.class);
+        DataRepository dataRepository = Injection.provideDataRepository(mainUiThread, threadExecutor, databaseDefinition);
         presenter = new PhotoDetailPresenter(this, dataRepository, threadExecutor, mainUiThread);
         comments = new ArrayList<>();
     }
@@ -93,9 +98,11 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvComments.setLayoutManager(linearLayoutManager);
+        rvComments.setNestedScrollingEnabled(true);
 
         showPhoto(photo);
-        presenter.getComments(photo.getId());
+        presenter.getComments(photo);
+
     }
 
     @Override
