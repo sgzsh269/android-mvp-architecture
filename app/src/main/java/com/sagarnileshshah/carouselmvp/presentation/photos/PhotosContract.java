@@ -3,8 +3,9 @@ package com.sagarnileshshah.carouselmvp.presentation.photos;
 import android.content.Context;
 
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
-import com.sagarnileshshah.carouselmvp.util.BasePresenter;
-import com.sagarnileshshah.carouselmvp.util.BaseView;
+import com.sagarnileshshah.carouselmvp.util.mvp.IBasePresenter;
+import com.sagarnileshshah.carouselmvp.util.mvp.IBaseView;
+
 import java.util.List;
 
 /**
@@ -12,25 +13,13 @@ import java.util.List;
  */
 interface PhotosContract {
 
-  interface View extends BaseView<Presenter> {
+    interface View extends IBaseView {
 
-    void showPhotos(List<Photo> photos);
+        void showPhotos(List<Photo> photos);
+    }
 
-    void showProgressBar();
+    interface Presenter extends IBasePresenter<View> {
 
-    void hideProgressBar();
-
-    void showErrorMessage();
-
-    Context getContext();
-  }
-
-  interface Presenter extends BasePresenter<View> {
-
-    void getPhotos(int page);
-
-    void onPause();
-
-    void onResume(View view);
-  }
+        void getPhotos(Context context, int page);
+    }
 }

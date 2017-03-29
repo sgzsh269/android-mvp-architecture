@@ -26,8 +26,10 @@ import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
 import com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource;
 import com.sagarnileshshah.carouselmvp.di.Injection;
 import com.sagarnileshshah.carouselmvp.presentation.photodetail.PhotoDetailFragment;
+import com.sagarnileshshah.carouselmvp.util.FoaBaseActivity;
 import com.sagarnileshshah.carouselmvp.util.ItemClickSupport;
 import com.sagarnileshshah.carouselmvp.util.Properties;
+import com.sagarnileshshah.carouselmvp.util.mvp.BaseView;
 import com.sagarnileshshah.carouselmvp.util.threading.MainUiThread;
 import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
 import com.sagarnileshshah.carouselmvp.util.EndlessRecyclerViewScrollListener;
@@ -37,19 +39,16 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotosFragment extends Fragment implements PhotosContract.View {
+public class PhotosFragment extends BaseView implements PhotosContract.View {
 
     @BindView(R.id.rvPhotos)
     RecyclerView rvPhotos;
-
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
 
     private PhotosRecyclerAdapter recyclerAdapter;
     private List<Photo> photos;
     private EndlessRecyclerViewScrollListener endlessScrollListener;
     private PhotosContract.Presenter presenter;
-    private OnFragmentInteractionListener listener;
+    private FoaBaseActivity listener;
     private boolean isCreated;
 
     public PhotosFragment() {
@@ -99,7 +98,7 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
                 Parcelable parcelable = Parcels.wrap(photo);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Properties.BUNDLE_KEY_PHOTO, parcelable);
-                listener.showFragment(PhotoDetailFragment.class, bundle);
+                listener.showFragment(PhotoDetailFragment.class, bundle, true);
             }
         });
     }
@@ -107,7 +106,7 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (OnFragmentInteractionListener) getActivity();
+        listener = (FoaBaseActivity) getActivity();
     }
 
     @Override
@@ -116,37 +115,16 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     }
 
     @Override
-    public void setPresenter(PhotosContract.Presenter presenter) {
-        this.presenter = presenter;
-    }
-
-    @Override
     public void showPhotos(List<Photo> photos) {
         this.photos.addAll(photos);
         recyclerAdapter.notifyItemRangeInserted(this.photos.size(), photos.size());
-    }
-
-    @Override
-    public void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideProgressBar() {
-        progressBar.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    public void showErrorMessage() {
-        Toast.makeText(getContext(), getResources().getString(R.string.error_msg), Toast.LENGTH_LONG).show();
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.onResume(this);
+        presenter.onViewActive(this);
         if (isCreated) {
             getPhotos(1);
             isCreated = false;
@@ -155,17 +133,11 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
 
     @Override
     public void onPause() {
-        presenter.onPause();
+        presenter.onViewInactive();
         super.onPause();
     }
 
     private void getPhotos(int page) {
-        presenter.getPhotos(page);
-    }
-
-    public interface OnFragmentInteractionListener {
-
-        <T extends Fragment> void showFragment(Class<T> fragmentClass, Bundle bundle);
-
+        presenter.getPhotos(getContext(), page);
     }
 }

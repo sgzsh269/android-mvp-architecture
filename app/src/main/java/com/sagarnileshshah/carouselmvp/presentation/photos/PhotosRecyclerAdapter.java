@@ -64,7 +64,7 @@ public class PhotosRecyclerAdapter extends RecyclerView.Adapter<PhotosRecyclerAd
 
         viewHolder.tvTitle.setText(photo.getTitle());
 
-        Glide.with(fragment).load(photoUrl).into(viewHolder.ivPhoto);
+        Glide.with(fragment).load(photoUrl).placeholder(R.drawable.drawable_placeholder).error(R.drawable.drawable_placeholder).into(viewHolder.ivPhoto);
     }
 
     @Override

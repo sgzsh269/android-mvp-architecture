@@ -1,5 +1,9 @@
 package com.sagarnileshshah.carouselmvp.presentation;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,13 +24,23 @@ import butterknife.ButterKnife;
 import com.sagarnileshshah.carouselmvp.R;
 import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosFragment;
 import com.sagarnileshshah.carouselmvp.util.FoaBaseActivity;
+import com.sagarnileshshah.carouselmvp.util.NetworkHelper;
 
-public class MainActivity extends FoaBaseActivity implements PhotosFragment.OnFragmentInteractionListener {
+import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
+import static android.view.View.GONE;
+
+public class MainActivity extends FoaBaseActivity {
 
     @BindView(R.id.fragmentPlaceHolder)
     FrameLayout fragmentPlaceholder;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.tvOfflineMode)
+    TextView tvOfflineMode;
+
+    private IntentFilter connectivityIntentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,24 +48,32 @@ public class MainActivity extends FoaBaseActivity implements PhotosFragment.OnFr
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         showFragment(PhotosFragment.class);
+        connectivityIntentFilter = new IntentFilter(CONNECTIVITY_ACTION);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(connectivityBroadcastReceiver, connectivityIntentFilter);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void onPause() {
+        unregisterReceiver(connectivityBroadcastReceiver);
+        super.onPause();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
+    BroadcastReceiver connectivityBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(!NetworkHelper.getInstance().isNetworkAvailable(context)){
+                tvOfflineMode.setVisibility(View.VISIBLE);
+            } else {
+                tvOfflineMode.setVisibility(View.GONE);
+            }
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    };
 }

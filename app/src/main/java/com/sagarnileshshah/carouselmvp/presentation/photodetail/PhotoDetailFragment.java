@@ -34,6 +34,7 @@ import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosPresenter;
 import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosRecyclerAdapter;
 import com.sagarnileshshah.carouselmvp.util.EndlessRecyclerViewScrollListener;
 import com.sagarnileshshah.carouselmvp.util.Properties;
+import com.sagarnileshshah.carouselmvp.util.mvp.BaseView;
 import com.sagarnileshshah.carouselmvp.util.threading.MainUiThread;
 import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
 
@@ -44,7 +45,7 @@ import java.util.List;
 
 import static com.sagarnileshshah.carouselmvp.util.Properties.PHOTO_URL;
 
-public class PhotoDetailFragment extends Fragment implements PhotoDetailContract.View {
+public class PhotoDetailFragment extends BaseView implements PhotoDetailContract.View {
 
     @BindView(R.id.ivPhoto)
     ImageView ivPhoto;
@@ -54,9 +55,6 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
 
     @BindView(R.id.rvComments)
     RecyclerView rvComments;
-
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
 
     private CommentsRecyclerAdapter recyclerAdapter;
     private EndlessRecyclerViewScrollListener endlessScrollListener;
@@ -101,8 +99,7 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
         rvComments.setNestedScrollingEnabled(true);
 
         showPhoto(photo);
-        presenter.getComments(photo);
-
+        presenter.getComments(getContext(), photo);
     }
 
     @Override
@@ -117,14 +114,14 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
 
     @Override
     public void onPause() {
-        presenter.onPause();
+        presenter.onViewInactive();
         super.onPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.onResume(this);
+        presenter.onViewActive(this);
     }
 
     @Override
@@ -136,24 +133,10 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
 
     @Override
     public void showComments(List<Comment> comments) {
-        if(comments != null) {
+        if (comments != null) {
             this.comments.addAll(comments);
             recyclerAdapter.notifyItemRangeInserted(this.comments.size(), comments.size());
         }
     }
 
-    @Override
-    public void showErrorMessage() {
-        Toast.makeText(getContext(), getResources().getString(R.string.error_msg), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideProgressBar() {
-        progressBar.setVisibility(View.GONE);
-    }
 }

@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/ivPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivPhoto"
-            android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textSize="24sp" />
+            android:layout_marginLeft="@dimen/title_marginLeftRight"
+            android:layout_marginRight="@dimen/title_marginLeftRight"
+            android:fontFamily="sans-serif-black"
+            android:textSize="@dimen/title_textSize" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvComments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tvTitle"
+            android:layout_marginTop="20dp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -33,14 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:visibility="gone" />
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvComments"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tvTitle"
-            android:background="@android:color/background_light" />
 
     </RelativeLayout>
 

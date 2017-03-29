@@ -4,34 +4,23 @@ import android.content.Context;
 
 import com.sagarnileshshah.carouselmvp.data.models.comment.Comment;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
-import com.sagarnileshshah.carouselmvp.util.BasePresenter;
-import com.sagarnileshshah.carouselmvp.util.BaseView;
+import com.sagarnileshshah.carouselmvp.util.mvp.BaseView;
+import com.sagarnileshshah.carouselmvp.util.mvp.IBasePresenter;
+import com.sagarnileshshah.carouselmvp.util.mvp.IBaseView;
 
 import java.util.List;
 
 interface PhotoDetailContract {
 
-    interface View {
+    interface View extends IBaseView {
 
         void showPhoto(Photo photo);
 
         void showComments(List<Comment> comments);
-
-        void showErrorMessage();
-
-        Context getContext();
-
-        void showProgressBar();
-
-        void hideProgressBar();
     }
 
-    interface Presenter {
+    interface Presenter extends IBasePresenter<View> {
 
-        void getComments(Photo photo);
-
-        void onPause();
-
-        void onResume(View view);
+        void getComments(Context context, Photo photo);
     }
 }

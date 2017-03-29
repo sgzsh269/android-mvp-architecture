@@ -22,7 +22,3 @@ allprojects {
 task clean(type: Delete) {
   delete rootProject.buildDir
 }
-
-ext {
-  dbflowVersion = "4.0.0-beta5"
-}

@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/item_comment_margin"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="24sp" />
+        android:layout_marginLeft="@dimen/comment_marginLeftRight"
+        android:layout_marginRight="@dimen/comment_marginLeftRight"
+        android:fontFamily="sans-serif-thin"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/comment_textSize" />
 
     <TextView
         android:id="@+id/tvAuthor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="20sp"
-        android:gravity="right"/>
+        android:layout_marginLeft="@dimen/comment_marginLeftRight"
+        android:layout_marginRight="@dimen/title_marginLeftRight"
+        android:fontFamily="sans-serif"
+        android:gravity="right"
+        android:textSize="@dimen/author_textSize" />
 
 </LinearLayout>

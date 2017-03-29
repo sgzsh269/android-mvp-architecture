@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -26,6 +27,11 @@ android {
     }
 }
 
+ext {
+    dbflowVersion = "4.0.0-beta5"
+    supportLibVersion = "25.3.0"
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -38,10 +44,13 @@ dependencies {
     })
 
 
-    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
-    compile 'com.android.support:design:25.3.0'
-    compile 'com.android.support:support-v4:25.3.0'
+    compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:support-v4:${supportLibVersion}"
+    compile "com.android.support:support-vector-drawable:${supportLibVersion}"
+    compile "com.android.support:animated-vector-drawable:${supportLibVersion}"
+
     compile 'com.jakewharton:butterknife:8.5.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'

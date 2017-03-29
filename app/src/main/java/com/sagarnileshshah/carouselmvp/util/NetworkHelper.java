@@ -19,7 +19,7 @@ public class NetworkHelper {
         return networkHelper;
     }
 
-    public boolean isInternetAvailable(Context context) {
+    public boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

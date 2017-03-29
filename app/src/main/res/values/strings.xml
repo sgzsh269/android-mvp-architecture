@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">CarouselMVP</string>
+    <string name="app_name">Carousel</string>
     <string name="action_settings">Settings</string>
     <string name="error_msg">Something went wrong, please try again later.</string>
+    <string name="network_failure_msg">No network. Please try again later.</string>
+    <string name="offline_mode_msg">No network - Offline mode</string>
 </resources>

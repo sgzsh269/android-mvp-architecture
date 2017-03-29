@@ -1,9 +1,13 @@
 package com.sagarnileshshah.carouselmvp.presentation.photodetail;
 
+import android.content.Context;
+
+import com.sagarnileshshah.carouselmvp.R;
 import com.sagarnileshshah.carouselmvp.data.DataRepository;
 import com.sagarnileshshah.carouselmvp.data.DataSource;
 import com.sagarnileshshah.carouselmvp.data.models.comment.Comment;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
+import com.sagarnileshshah.carouselmvp.util.mvp.BasePresenter;
 import com.sagarnileshshah.carouselmvp.util.threading.MainUiThread;
 import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
 
@@ -13,9 +17,8 @@ import java.util.List;
  * Created by sshah on 3/25/17.
  */
 
-public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
+public class PhotoDetailPresenter extends BasePresenter<PhotoDetailContract.View> implements PhotoDetailContract.Presenter {
 
-    private PhotoDetailContract.View view;
     private DataRepository dataRepository;
     private ThreadExecutor threadExecutor;
     private MainUiThread mainUiThread;
@@ -29,35 +32,33 @@ public class PhotoDetailPresenter implements PhotoDetailContract.Presenter {
     }
 
     @Override
-    public void getComments(Photo photo) {
-        view.showProgressBar();
+    public void getComments(Context context, Photo photo) {
+        view.setProgressBar(true);
 
-        dataRepository.getComments(view.getContext(), photo, new DataSource.GetCommentsCallback() {
+        dataRepository.getComments(context, photo, new DataSource.GetCommentsCallback() {
             @Override
             public void onSuccess(List<Comment> comments) {
                 if (view != null) {
                     view.showComments(comments);
-                    view.hideProgressBar();
+                    view.setProgressBar(false);
                 }
             }
 
             @Override
             public void onFailure(Throwable throwable) {
                 if (view != null) {
-                    view.hideProgressBar();
-                    view.showErrorMessage();
+                    view.setProgressBar(false);
+                    view.showToastMessage(view.getContext().getString(R.string.error_msg));
+                }
+            }
+
+            @Override
+            public void onNetworkFailure() {
+                if (view != null) {
+                    view.setProgressBar(false);
+                    view.showToastMessage(view.getContext().getString(R.string.network_failure_msg));
                 }
             }
         });
-    }
-
-    @Override
-    public void onPause() {
-        view = null;
-    }
-
-    @Override
-    public void onResume(PhotoDetailContract.View view) {
-        this.view = view;
     }
 }

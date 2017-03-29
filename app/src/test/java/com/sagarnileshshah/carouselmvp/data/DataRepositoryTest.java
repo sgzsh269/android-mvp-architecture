@@ -61,7 +61,7 @@ public class DataRepositoryTest {
     @Test
     public void getPhotos_shouldCallRemoteDataSourceAndStoreLocally() {
         int page = 1;
-        when(mockNetworkHelper.isInternetAvailable(mockContext)).thenReturn(true);
+        when(mockNetworkHelper.isNetworkAvailable(mockContext)).thenReturn(true);
 
         dataRepository.getPhotos(mockContext, page, mockGetPhotosCallback);
 
@@ -77,7 +77,7 @@ public class DataRepositoryTest {
     @Test
     public void getPhotos_shouldCallLocalDataSource() {
         int page = 1;
-        when(mockNetworkHelper.isInternetAvailable(mockContext)).thenReturn(false);
+        when(mockNetworkHelper.isNetworkAvailable(mockContext)).thenReturn(false);
 
         dataRepository.getPhotos(mockContext, page, mockGetPhotosCallback);
 

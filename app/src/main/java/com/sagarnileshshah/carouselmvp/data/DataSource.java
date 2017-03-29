@@ -4,32 +4,39 @@ import com.sagarnileshshah.carouselmvp.data.models.comment.Comment;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
 import com.sagarnileshshah.carouselmvp.util.threading.MainUiThread;
 import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
+
 import java.util.List;
 
 public abstract class DataSource {
 
-  protected MainUiThread mainUiThread;
-  protected ThreadExecutor threadExecutor;
+    protected MainUiThread mainUiThread;
+    protected ThreadExecutor threadExecutor;
 
-  public DataSource(MainUiThread mainUiThread, ThreadExecutor threadExecutor) {
-    this.mainUiThread = mainUiThread;
-    this.threadExecutor = threadExecutor;
-  }
+    public DataSource(MainUiThread mainUiThread, ThreadExecutor threadExecutor) {
+        this.mainUiThread = mainUiThread;
+        this.threadExecutor = threadExecutor;
+    }
 
-  public interface GetPhotosCallback {
-    void onSuccess(List<Photo> photos);
+    public interface GetPhotosCallback {
+        void onSuccess(List<Photo> photos);
 
-    void onFailure(Throwable throwable);
-  }
+        void onFailure(Throwable throwable);
 
-  public interface GetCommentsCallback {
+        void onNetworkFailure();
 
-    void onSuccess(List<Comment> comments);
+    }
 
-    void onFailure(Throwable throwable);
-  }
+    public interface GetCommentsCallback {
 
-  abstract public void getPhotos(int page, GetPhotosCallback callback);
+        void onSuccess(List<Comment> comments);
 
-  abstract public void getComments(String photoId, GetCommentsCallback callback);
+        void onFailure(Throwable throwable);
+
+        void onNetworkFailure();
+
+    }
+
+    abstract public void getPhotos(int page, GetPhotosCallback callback);
+
+    abstract public void getComments(String photoId, GetCommentsCallback callback);
 }

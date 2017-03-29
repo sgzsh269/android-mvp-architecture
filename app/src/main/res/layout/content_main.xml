@@ -6,7 +6,20 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.sagarnileshshah.carouselmvp.presentation.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tvOfflineMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_light"
+        android:text="@string/offline_mode_msg"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:gravity="center"/>
 
     <FrameLayout
         android:id="@+id/fragmentPlaceHolder"

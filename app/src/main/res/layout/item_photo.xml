@@ -2,21 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/item_photo_margin">
 
     <ImageView
         android:id="@+id/ivPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:scaleType="centerCrop" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/drawable_placeholder" />
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivPhoto"
-        android:layout_marginTop="4dp"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="24sp" />
+        android:layout_alignBottom="@+id/ivPhoto"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="@dimen/title_margin_bottom"
+        android:background="@color/colorAccent"
+        android:fontFamily="sans-serif-black"
+        android:paddingBottom="@dimen/title_paddingBottomTop"
+        android:paddingLeft="@dimen/title_paddingLeft"
+        android:paddingRight="@dimen/title_paddingRight"
+        android:paddingTop="@dimen/title_paddingBottomTop"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/title_textSize" />
 
 </RelativeLayout>
