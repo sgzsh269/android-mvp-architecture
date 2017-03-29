@@ -5,16 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -23,13 +29,14 @@ import butterknife.ButterKnife;
 
 import com.sagarnileshshah.carouselmvp.R;
 import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosFragment;
+import com.sagarnileshshah.carouselmvp.util.BaseFragmentInteractionListener;
 import com.sagarnileshshah.carouselmvp.util.FoaBaseActivity;
 import com.sagarnileshshah.carouselmvp.util.NetworkHelper;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.view.View.GONE;
 
-public class MainActivity extends FoaBaseActivity {
+public class MainActivity extends FoaBaseActivity implements BaseFragmentInteractionListener {
 
     @BindView(R.id.fragmentPlaceHolder)
     FrameLayout fragmentPlaceholder;
@@ -39,6 +46,9 @@ public class MainActivity extends FoaBaseActivity {
 
     @BindView(R.id.tvOfflineMode)
     TextView tvOfflineMode;
+
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
 
     private IntentFilter connectivityIntentFilter;
 
@@ -51,6 +61,8 @@ public class MainActivity extends FoaBaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         showFragment(PhotosFragment.class);
         connectivityIntentFilter = new IntentFilter(CONNECTIVITY_ACTION);
+
+
     }
 
 
@@ -66,14 +78,21 @@ public class MainActivity extends FoaBaseActivity {
         super.onPause();
     }
 
+
     BroadcastReceiver connectivityBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(!NetworkHelper.getInstance().isNetworkAvailable(context)){
+            if (!NetworkHelper.getInstance().isNetworkAvailable(context)) {
                 tvOfflineMode.setVisibility(View.VISIBLE);
             } else {
                 tvOfflineMode.setVisibility(View.GONE);
             }
         }
     };
+
+
+    @Override
+    public void resetToolBarScroll() {
+        appBarLayout.setExpanded(true, true);
+    }
 }

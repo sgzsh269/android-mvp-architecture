@@ -26,6 +26,7 @@ import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
 import com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource;
 import com.sagarnileshshah.carouselmvp.di.Injection;
 import com.sagarnileshshah.carouselmvp.presentation.photodetail.PhotoDetailFragment;
+import com.sagarnileshshah.carouselmvp.util.BaseFragmentInteractionListener;
 import com.sagarnileshshah.carouselmvp.util.FoaBaseActivity;
 import com.sagarnileshshah.carouselmvp.util.ItemClickSupport;
 import com.sagarnileshshah.carouselmvp.util.Properties;
@@ -48,8 +49,9 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
     private List<Photo> photos;
     private EndlessRecyclerViewScrollListener endlessScrollListener;
     private PhotosContract.Presenter presenter;
-    private FoaBaseActivity listener;
     private boolean isCreated;
+    private BaseFragmentInteractionListener fragmentInteractionListener;
+
 
     public PhotosFragment() {
     }
@@ -98,7 +100,7 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
                 Parcelable parcelable = Parcels.wrap(photo);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Properties.BUNDLE_KEY_PHOTO, parcelable);
-                listener.showFragment(PhotoDetailFragment.class, bundle, true);
+                fragmentInteractionListener.showFragment(PhotoDetailFragment.class, bundle, true);
             }
         });
     }
@@ -106,7 +108,7 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (FoaBaseActivity) getActivity();
+        fragmentInteractionListener = (BaseFragmentInteractionListener) getActivity();
     }
 
     @Override
@@ -129,6 +131,8 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
             getPhotos(1);
             isCreated = false;
         }
+
+        fragmentInteractionListener.resetToolBarScroll();
     }
 
     @Override

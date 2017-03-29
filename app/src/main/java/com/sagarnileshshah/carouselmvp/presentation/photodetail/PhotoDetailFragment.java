@@ -32,6 +32,7 @@ import com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource;
 import com.sagarnileshshah.carouselmvp.di.Injection;
 import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosPresenter;
 import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosRecyclerAdapter;
+import com.sagarnileshshah.carouselmvp.util.BaseFragmentInteractionListener;
 import com.sagarnileshshah.carouselmvp.util.EndlessRecyclerViewScrollListener;
 import com.sagarnileshshah.carouselmvp.util.Properties;
 import com.sagarnileshshah.carouselmvp.util.mvp.BaseView;
@@ -61,6 +62,7 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
     private PhotoDetailContract.Presenter presenter;
     private Photo photo;
     private List<Comment> comments;
+    private BaseFragmentInteractionListener fragmentInteractionListener;
 
     public PhotoDetailFragment() {
     }
@@ -105,6 +107,7 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        fragmentInteractionListener = (BaseFragmentInteractionListener) getActivity();
     }
 
     @Override
@@ -122,6 +125,7 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
     public void onResume() {
         super.onResume();
         presenter.onViewActive(this);
+        fragmentInteractionListener.resetToolBarScroll();
     }
 
     @Override
@@ -138,5 +142,6 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
             recyclerAdapter.notifyItemRangeInserted(this.comments.size(), comments.size());
         }
     }
+
 
 }
