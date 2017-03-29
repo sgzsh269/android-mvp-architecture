@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+// Load sensitive project properties
+ext.projectProps = {
+    def props = new Properties()
+    props.load(new FileInputStream(rootProject.file("project.properties")))
+    project.ext.projectProps = props
+}()
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -10,40 +17,45 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
+        vectorDrawables.setUseSupportLibrary true
+        buildConfigField "String", "FLICKR_API_KEY", projectProps.flickrApiKey
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {}
     }
 
     productFlavors {
         mock {
-            applicationIdSuffix = ".mock"
+            applicationIdSuffix ".mock"
         }
-        prod
+        prod {}
     }
 }
 
 ext {
     dbflowVersion = "4.0.0-beta5"
     supportLibVersion = "25.3.0"
+    butterKnifeVersion = "8.5.1"
+    glideVersion = "3.7.0"
+    okhttpVersion = "3.6.0"
+    retrofitVersion = "2.2.0"
+    stethoOkhttpVersion = "1.4.2"
+    gsonVersion = "2.8.0"
+    parcelerVersion = "1.1.6"
+    junitVersion = "4.12"
+    mockitoVersion = "2.7.19"
+    espressoCoreVersion = "2.2.2"
 }
 
 dependencies {
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
-
-
-    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflowVersion}"
-    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflowVersion}"
-
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
-
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     compile "com.android.support:design:${supportLibVersion}"
@@ -51,21 +63,35 @@ dependencies {
     compile "com.android.support:support-vector-drawable:${supportLibVersion}"
     compile "com.android.support:animated-vector-drawable:${supportLibVersion}"
 
-    compile 'com.jakewharton:butterknife:8.5.1'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.github.scribejava:scribejava-apis:3.2.0'
-    compile 'com.github.scribejava:scribejava-httpclient-okhttp:4.0.0'
-    compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'org.parceler:parceler-api:1.1.6'
+    compile "com.jakewharton:butterknife:${butterKnifeVersion}"
+    compile "com.github.bumptech.glide:glide:${glideVersion}"
+    compile "com.squareup.okhttp3:okhttp:${okhttpVersion}"
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.facebook.stetho:stetho-okhttp3:${stethoOkhttpVersion}"
+    compile "com.google.code.gson:gson:${gsonVersion}"
+    compile "org.parceler:parceler-api:${parcelerVersion}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflowVersion}"
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-android:2.7.19'
+
+    testCompile "junit:junit:${junitVersion}"
+    testCompile "org.mockito:mockito-android:${mockitoVersion}"
+
+    androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoCoreVersion}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
 
 
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflowVersion}"
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    annotationProcessor 'org.parceler:parceler:1.1.6'
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
+    annotationProcessor "org.parceler:parceler:${parcelerVersion}"
 }
+
+def props(c) {
+    println('this is called')
+    c();
+}
+
+def load() {
+
+}
+

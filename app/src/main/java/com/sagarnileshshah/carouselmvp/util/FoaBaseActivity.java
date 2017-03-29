@@ -37,9 +37,11 @@ public abstract class FoaBaseActivity extends AppCompatActivity implements Fragm
                 e.printStackTrace();
             }
         }
+
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right,
+                R.anim.slide_out_left, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         fragmentTransaction.replace(R.id.fragmentPlaceHolder, fragment, fragmentClass.getSimpleName());
-        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,
-                android.R.anim.slide_out_right);
+
 
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(null);
