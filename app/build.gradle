@@ -67,6 +67,8 @@ dependencies {
     compile "com.github.bumptech.glide:glide:${glideVersion}"
     compile "com.squareup.okhttp3:okhttp:${okhttpVersion}"
     compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    compile "com.facebook.stetho:stetho:${stethoOkhttpVersion}"
     compile "com.facebook.stetho:stetho-okhttp3:${stethoOkhttpVersion}"
     compile "com.google.code.gson:gson:${gsonVersion}"
     compile "org.parceler:parceler-api:${parcelerVersion}"

@@ -32,7 +32,11 @@ public class PhotoDetailPresenter extends BasePresenter<PhotoDetailContract.View
     }
 
     @Override
-    public void getComments(Context context, Photo photo) {
+    public void getComments(final Context context, Photo photo) {
+        if (view == null) {
+            return;
+        }
+
         view.setProgressBar(true);
 
         dataRepository.getComments(context, photo, new DataSource.GetCommentsCallback() {
@@ -48,7 +52,7 @@ public class PhotoDetailPresenter extends BasePresenter<PhotoDetailContract.View
             public void onFailure(Throwable throwable) {
                 if (view != null) {
                     view.setProgressBar(false);
-                    view.showToastMessage(view.getContext().getString(R.string.error_msg));
+                    view.showToastMessage(context.getString(R.string.error_msg));
                 }
             }
 
@@ -56,7 +60,7 @@ public class PhotoDetailPresenter extends BasePresenter<PhotoDetailContract.View
             public void onNetworkFailure() {
                 if (view != null) {
                     view.setProgressBar(false);
-                    view.showToastMessage(view.getContext().getString(R.string.network_failure_msg));
+                    view.showToastMessage(context.getString(R.string.network_failure_msg));
                 }
             }
         });

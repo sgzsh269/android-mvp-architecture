@@ -27,7 +27,11 @@ public class PhotosPresenter extends BasePresenter<PhotosContract.View> implemen
     }
 
     @Override
-    public void getPhotos(Context context, int page) {
+    public void getPhotos(final Context context, int page) {
+        if (view == null) {
+            return;
+        }
+
         view.setProgressBar(true);
 
         dataRepository.getPhotos(context, page, new DataSource.GetPhotosCallback() {
@@ -43,7 +47,7 @@ public class PhotosPresenter extends BasePresenter<PhotosContract.View> implemen
             public void onFailure(Throwable throwable) {
                 if (view != null) {
                     view.setProgressBar(false);
-                    view.showToastMessage(view.getContext().getString(R.string.error_msg));
+                    view.showToastMessage(context.getString(R.string.error_msg));
                 }
             }
 
@@ -51,7 +55,7 @@ public class PhotosPresenter extends BasePresenter<PhotosContract.View> implemen
             public void onNetworkFailure() {
                 if (view != null) {
                     view.setProgressBar(false);
-                    view.showToastMessage(view.getContext().getString(R.string.network_failure_msg));
+                    view.showToastMessage(context.getString(R.string.network_failure_msg));
                 }
             }
         });

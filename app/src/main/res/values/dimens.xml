@@ -5,7 +5,7 @@
     <dimen name="title_paddingLeft">16dp</dimen>
     <dimen name="title_paddingRight">8dp</dimen>
     <dimen name="title_marginLeftRight">8dp</dimen>
-    <dimen name="item_photo_margin">8dp</dimen>
+    <dimen name="item_photo_margin">4dp</dimen>
     <dimen name="title_textSize">24sp</dimen>
     <dimen name="comment_marginLeftRight">8dp</dimen>
     <dimen name="item_comment_margin">8dp</dimen>

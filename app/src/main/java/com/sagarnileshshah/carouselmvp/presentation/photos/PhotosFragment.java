@@ -1,5 +1,6 @@
 package com.sagarnileshshah.carouselmvp.presentation.photos;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -53,9 +54,6 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
     private BaseFragmentInteractionListener fragmentInteractionListener;
 
 
-    public PhotosFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +64,7 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
         DataRepository dataRepository = Injection.provideDataRepository(mainUiThread, threadExecutor, databaseDefinition);
         presenter = new PhotosPresenter(this, dataRepository, threadExecutor, mainUiThread);
         isCreated = true;
+        setRetainInstance(true);
     }
 
     @Override
@@ -142,6 +141,6 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
     }
 
     private void getPhotos(int page) {
-        presenter.getPhotos(getContext(), page);
+        presenter.getPhotos(getContext().getApplicationContext(), page);
     }
 }

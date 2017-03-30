@@ -79,6 +79,7 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
         DataRepository dataRepository = Injection.provideDataRepository(mainUiThread, threadExecutor, databaseDefinition);
         presenter = new PhotoDetailPresenter(this, dataRepository, threadExecutor, mainUiThread);
         comments = new ArrayList<>();
+        setRetainInstance(true);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
         rvComments.setNestedScrollingEnabled(true);
 
         showPhoto(photo);
-        presenter.getComments(getContext(), photo);
+        presenter.getComments(getContext().getApplicationContext(), photo);
     }
 
     @Override
@@ -132,7 +133,7 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
     public void showPhoto(Photo photo) {
         tvTitle.setText(photo.getTitle());
         String photoUrl = String.format(PHOTO_URL, photo.getFarm(), photo.getServer(), photo.getId(), photo.getSecret());
-        Glide.with(this).load(photoUrl).into(ivPhoto);
+        Glide.with(this).load(photoUrl).placeholder(R.drawable.drawable_placeholder).error(R.drawable.drawable_placeholder).into(ivPhoto);
     }
 
     @Override
