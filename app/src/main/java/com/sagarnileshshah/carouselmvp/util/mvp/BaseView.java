@@ -23,7 +23,7 @@ public abstract class BaseView extends Fragment implements IBaseView {
 
     @Override
     public void setProgressBar(boolean show) {
-        if(show) {
+        if (show) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.GONE);

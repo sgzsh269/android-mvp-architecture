@@ -19,5 +19,7 @@ public interface ApiService {
     Call<Response> getPhotos(@QueryMap Map<String, String> queryMap);
 
     @GET("services/rest")
-    Call<com.sagarnileshshah.carouselmvp.data.models.comment.Response> getComments(@Query(RemoteDataSource.QUERY_PARAM_PHOTO_ID) String photoId, @QueryMap Map<String, String> queryMap);
+    Call<com.sagarnileshshah.carouselmvp.data.models.comment.Response> getComments(
+            @Query(RemoteDataSource.QUERY_PARAM_PHOTO_ID) String photoId,
+            @QueryMap Map<String, String> queryMap);
 }

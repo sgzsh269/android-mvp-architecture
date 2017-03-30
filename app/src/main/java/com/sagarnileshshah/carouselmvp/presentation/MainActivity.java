@@ -61,8 +61,6 @@ public class MainActivity extends FoaBaseActivity implements BaseFragmentInterac
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         showFragment(PhotosFragment.class);
         connectivityIntentFilter = new IntentFilter(CONNECTIVITY_ACTION);
-
-
     }
 
 

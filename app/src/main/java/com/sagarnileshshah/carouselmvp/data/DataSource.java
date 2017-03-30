@@ -36,7 +36,7 @@ public abstract class DataSource {
 
     }
 
-    abstract public void getPhotos(int page, GetPhotosCallback callback);
+    public abstract void getPhotos(int page, GetPhotosCallback callback);
 
-    abstract public void getComments(String photoId, GetCommentsCallback callback);
+    public abstract void getComments(String photoId, GetCommentsCallback callback);
 }

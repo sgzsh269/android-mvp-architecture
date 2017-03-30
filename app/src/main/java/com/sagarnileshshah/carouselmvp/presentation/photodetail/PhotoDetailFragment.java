@@ -57,6 +57,9 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
     @BindView(R.id.rvComments)
     RecyclerView rvComments;
 
+    @BindView(R.id.tvPlaceholder)
+    TextView tvPlaceholder;
+
     private CommentsRecyclerAdapter recyclerAdapter;
     private EndlessRecyclerViewScrollListener endlessScrollListener;
     private PhotoDetailContract.Presenter presenter;
@@ -76,7 +79,8 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
         ThreadExecutor threadExecutor = ThreadExecutor.getInstance();
         MainUiThread mainUiThread = MainUiThread.getInstance();
         DatabaseDefinition databaseDefinition = FlowManager.getDatabase(LocalDatabase.class);
-        DataRepository dataRepository = Injection.provideDataRepository(mainUiThread, threadExecutor, databaseDefinition);
+        DataRepository dataRepository = Injection.provideDataRepository(mainUiThread,
+                threadExecutor, databaseDefinition);
         presenter = new PhotoDetailPresenter(this, dataRepository, threadExecutor, mainUiThread);
         comments = new ArrayList<>();
         setRetainInstance(true);
@@ -84,7 +88,7 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_photo_detail, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -132,8 +136,10 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
     @Override
     public void showPhoto(Photo photo) {
         tvTitle.setText(photo.getTitle());
-        String photoUrl = String.format(PHOTO_URL, photo.getFarm(), photo.getServer(), photo.getId(), photo.getSecret());
-        Glide.with(this).load(photoUrl).placeholder(R.drawable.drawable_placeholder).error(R.drawable.drawable_placeholder).into(ivPhoto);
+        String photoUrl = String.format(PHOTO_URL, photo.getFarm(), photo.getServer(),
+                photo.getId(), photo.getSecret());
+        Glide.with(this).load(photoUrl).placeholder(R.drawable.drawable_placeholder).error(
+                R.drawable.drawable_placeholder).into(ivPhoto);
     }
 
     @Override
@@ -141,6 +147,15 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
         if (comments != null) {
             this.comments.addAll(comments);
             recyclerAdapter.notifyItemRangeInserted(this.comments.size(), comments.size());
+        }
+    }
+
+    @Override
+    public void shouldShowPlaceholderText() {
+        if (comments.isEmpty()) {
+            tvPlaceholder.setVisibility(View.VISIBLE);
+        } else {
+            tvPlaceholder.setVisibility(View.GONE);
         }
     }
 

@@ -18,15 +18,16 @@ public class DataRepository {
 
     private static DataRepository dataRepository;
 
-    public DataRepository(DataSource remoteDataSource, DataSource localDataSource, NetworkHelper networkHelper) {
+    public DataRepository(DataSource remoteDataSource, DataSource localDataSource,
+            NetworkHelper networkHelper) {
         this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;
         this.networkHelper = networkHelper;
     }
 
     public static synchronized DataRepository getInstance(DataSource remoteDataSource,
-                                                          DataSource localDataSource,
-                                                          NetworkHelper networkHelper) {
+            DataSource localDataSource,
+            NetworkHelper networkHelper) {
         if (dataRepository == null) {
             dataRepository = new DataRepository(remoteDataSource, localDataSource, networkHelper);
         }
@@ -57,7 +58,8 @@ public class DataRepository {
         }
     }
 
-    public void getComments(Context context, final Photo photo, final DataSource.GetCommentsCallback callback) {
+    public void getComments(Context context, final Photo photo,
+            final DataSource.GetCommentsCallback callback) {
         if (networkHelper.isNetworkAvailable(context)) {
             remoteDataSource.getComments(photo.getId(), new DataSource.GetCommentsCallback() {
                 @Override

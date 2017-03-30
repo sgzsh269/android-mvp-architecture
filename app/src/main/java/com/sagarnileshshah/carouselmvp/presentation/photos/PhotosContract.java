@@ -16,6 +16,8 @@ interface PhotosContract {
     interface View extends IBaseView {
 
         void showPhotos(List<Photo> photos);
+
+        void shouldShowPlaceholderText();
     }
 
     interface Presenter extends IBasePresenter<View> {

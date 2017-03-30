@@ -11,7 +11,7 @@ import com.sagarnileshshah.carouselmvp.data.local.LocalDatabase;
 import org.parceler.Parcel;
 
 @Table(database = LocalDatabase.class, allFields = true)
-@Parcel(value = Parcel.Serialization.BEAN ,analyze={Photo.class})
+@Parcel(value = Parcel.Serialization.BEAN, analyze = {Photo.class})
 public class Photo extends BaseModel {
 
     @SerializedName("id")

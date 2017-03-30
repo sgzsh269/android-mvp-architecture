@@ -8,11 +8,13 @@ import com.sagarnileshshah.carouselmvp.util.threading.MainUiThread;
 import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
 
 
-
 public class Injection {
 
-    public static DataRepository provideDataRepository(MainUiThread mainUiThread, ThreadExecutor threadExecutor, DatabaseDefinition databaseDefinition) {
-        return DataRepository.getInstance(FakeRemoteDataSource.getInstance(mainUiThread, threadExecutor),
-                LocalDataSource.getInstance(mainUiThread, threadExecutor, databaseDefinition), NetworkHelper.getInstance());
+    public static DataRepository provideDataRepository(MainUiThread mainUiThread,
+            ThreadExecutor threadExecutor, DatabaseDefinition databaseDefinition) {
+        return DataRepository.getInstance(
+                FakeRemoteDataSource.getInstance(mainUiThread, threadExecutor),
+                LocalDataSource.getInstance(mainUiThread, threadExecutor, databaseDefinition),
+                NetworkHelper.getInstance());
     }
 }

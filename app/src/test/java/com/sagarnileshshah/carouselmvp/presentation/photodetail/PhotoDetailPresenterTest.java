@@ -23,6 +23,8 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import android.content.Context;
+
 @RunWith(MockitoJUnitRunner.class)
 public class PhotoDetailPresenterTest {
 
@@ -38,6 +40,9 @@ public class PhotoDetailPresenterTest {
     @Mock
     private MainUiThread mockMainUiThread;
 
+    @Mock
+    private Context mockContext;
+
     @Captor
     private ArgumentCaptor<DataSource.GetCommentsCallback> getCommentsCallbackCaptor;
 
@@ -45,9 +50,10 @@ public class PhotoDetailPresenterTest {
     private Photo photo;
 
     @Before
-    public void setup(){
+    public void setup() {
 
-        photoDetailPresenter = new PhotoDetailPresenter(mockView, mockDataRepository, mockThreadExecutor, mockMainUiThread);
+        photoDetailPresenter = new PhotoDetailPresenter(mockView, mockDataRepository,
+                mockThreadExecutor, mockMainUiThread);
         photo = new Photo();
 
     }
@@ -55,34 +61,36 @@ public class PhotoDetailPresenterTest {
     @Test
     public void getComments_testWithActiveView() {
 
-        photoDetailPresenter.getComments(photo);
+        photoDetailPresenter.getComments(mockContext, photo);
 
-        verify(mockView).showProgressBar();
-        verify(mockDataRepository).getComments(eq(mockView.getContext()), eq(photo), getCommentsCallbackCaptor.capture());
+        verify(mockView).setProgressBar(true);
+        verify(mockDataRepository).getComments(eq(mockContext), eq(photo),
+                getCommentsCallbackCaptor.capture());
 
         DataSource.GetCommentsCallback getCommentsCallback = getCommentsCallbackCaptor.getValue();
 
         List<Comment> comments = new ArrayList<>();
-        photoDetailPresenter.onResume(mockView);
+        photoDetailPresenter.onViewActive(mockView);
         getCommentsCallback.onSuccess(comments);
         verify(mockView).showComments(comments);
-        verify(mockView).hideProgressBar();
+        verify(mockView).setProgressBar(false);
     }
 
     @Test
     public void getComments_testWithNonActiveView() {
 
-        photoDetailPresenter.getComments(photo);
+        photoDetailPresenter.getComments(mockContext, photo);
 
-        verify(mockView).showProgressBar();
-        verify(mockDataRepository).getComments(eq(mockView.getContext()), eq(photo), getCommentsCallbackCaptor.capture());
+        verify(mockView).setProgressBar(true);
+        verify(mockDataRepository).getComments(eq(mockContext), eq(photo),
+                getCommentsCallbackCaptor.capture());
 
         DataSource.GetCommentsCallback getCommentsCallback = getCommentsCallbackCaptor.getValue();
 
         List<Comment> comments = new ArrayList<>();
-        photoDetailPresenter.onPause();
+        photoDetailPresenter.onViewInactive();
         getCommentsCallback.onSuccess(comments);
         verify(mockView, never()).showComments(comments);
-        verify(mockView, never()).hideProgressBar();
+        verify(mockView, never()).setProgressBar(false);
     }
 }

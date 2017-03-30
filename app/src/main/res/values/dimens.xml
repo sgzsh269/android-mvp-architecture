@@ -11,4 +11,5 @@
     <dimen name="item_comment_margin">8dp</dimen>
     <dimen name="comment_textSize">28sp</dimen>
     <dimen name="author_textSize">20sp</dimen>
+    <dimen name="comments_marginTop">20dp</dimen>
 </resources>

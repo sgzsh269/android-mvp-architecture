@@ -4,4 +4,6 @@
     <string name="error_msg">Something went wrong, please try again later.</string>
     <string name="network_failure_msg">No network. Please try again later.</string>
     <string name="offline_mode_msg">No network - Offline mode</string>
+    <string name="no_photos_available">No photos available currently</string>
+    <string name="no_comments_available">No comments available currently</string>
 </resources>

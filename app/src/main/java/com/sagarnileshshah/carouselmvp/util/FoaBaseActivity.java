@@ -14,7 +14,8 @@ import com.sagarnileshshah.carouselmvp.R;
 /**
  * Fragment Oriented Architecture based Activity
  */
-public abstract class FoaBaseActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
+public abstract class FoaBaseActivity extends AppCompatActivity implements
+        FragmentManager.OnBackStackChangedListener {
 
 
     @Override
@@ -24,9 +25,11 @@ public abstract class FoaBaseActivity extends AppCompatActivity implements Fragm
         getSupportFragmentManager().addOnBackStackChangedListener(this);
     }
 
-    public <T extends Fragment> void showFragment(Class<T> fragmentClass, Bundle bundle, boolean addToBackStack) {
+    public <T extends Fragment> void showFragment(Class<T> fragmentClass, Bundle bundle,
+            boolean addToBackStack) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentClass.getSimpleName());
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(
+                fragmentClass.getSimpleName());
         if (fragment == null) {
             try {
                 fragment = fragmentClass.newInstance();
@@ -39,8 +42,10 @@ public abstract class FoaBaseActivity extends AppCompatActivity implements Fragm
         }
 
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_right,
-                R.anim.slide_out_left, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        fragmentTransaction.replace(R.id.fragmentPlaceHolder, fragment, fragmentClass.getSimpleName());
+                R.anim.slide_out_left, android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right);
+        fragmentTransaction.replace(R.id.fragmentPlaceHolder, fragment,
+                fragmentClass.getSimpleName());
 
 
         if (addToBackStack) {

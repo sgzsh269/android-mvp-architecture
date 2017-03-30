@@ -50,7 +50,8 @@ public class DataRepositoryTest {
 
     @Before
     public void setup() {
-        dataRepository = DataRepository.getInstance(mockRemoteDataSource, mockLocalDataSource, mockNetworkHelper);
+        dataRepository = DataRepository.getInstance(mockRemoteDataSource, mockLocalDataSource,
+                mockNetworkHelper);
     }
 
     @After
@@ -81,7 +82,8 @@ public class DataRepositoryTest {
 
         dataRepository.getPhotos(mockContext, page, mockGetPhotosCallback);
 
-        verify(mockRemoteDataSource, never()).getPhotos(eq(page), getPhotosCallbackCaptor.capture());
+        verify(mockRemoteDataSource, never()).getPhotos(eq(page),
+                getPhotosCallbackCaptor.capture());
         verify(mockLocalDataSource).getPhotos(page, mockGetPhotosCallback);
     }
 

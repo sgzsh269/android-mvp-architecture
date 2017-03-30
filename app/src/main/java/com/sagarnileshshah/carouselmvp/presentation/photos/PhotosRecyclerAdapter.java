@@ -60,15 +60,29 @@ public class PhotosRecyclerAdapter extends RecyclerView.Adapter<PhotosRecyclerAd
 
         Photo photo = photos.get(position);
 
-        String photoUrl = String.format(PHOTO_URL, photo.getFarm(), photo.getServer(), photo.getId(), photo.getSecret());
+        String photoUrl = String.format(PHOTO_URL, photo.getFarm(), photo.getServer(),
+                photo.getId(), photo.getSecret());
 
         viewHolder.tvTitle.setText(photo.getTitle());
 
-        Glide.with(fragment).load(photoUrl).placeholder(R.drawable.drawable_placeholder).error(R.drawable.drawable_placeholder).into(viewHolder.ivPhoto);
+        Glide.with(fragment).load(photoUrl).placeholder(R.drawable.drawable_placeholder).error(
+                R.drawable.drawable_placeholder).into(viewHolder.ivPhoto);
     }
 
     @Override
     public int getItemCount() {
         return photos.size();
+    }
+
+    public void clear() {
+        int size = getItemCount();
+        photos.clear();
+        notifyItemRangeRemoved(0, size);
+    }
+
+    public void addAll(List<Photo> photos) {
+        int prevSize = getItemCount();
+        this.photos.addAll(photos);
+        notifyItemRangeInserted(prevSize, photos.size());
     }
 }

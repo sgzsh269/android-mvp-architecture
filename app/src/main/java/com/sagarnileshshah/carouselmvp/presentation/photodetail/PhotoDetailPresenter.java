@@ -13,18 +13,16 @@ import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
 
 import java.util.List;
 
-/**
- * Created by sshah on 3/25/17.
- */
 
-public class PhotoDetailPresenter extends BasePresenter<PhotoDetailContract.View> implements PhotoDetailContract.Presenter {
+public class PhotoDetailPresenter extends BasePresenter<PhotoDetailContract.View> implements
+        PhotoDetailContract.Presenter {
 
     private DataRepository dataRepository;
     private ThreadExecutor threadExecutor;
     private MainUiThread mainUiThread;
 
     public PhotoDetailPresenter(PhotoDetailContract.View view, DataRepository dataRepository,
-                                ThreadExecutor threadExecutor, MainUiThread mainUiThread) {
+            ThreadExecutor threadExecutor, MainUiThread mainUiThread) {
         this.view = view;
         this.dataRepository = dataRepository;
         this.threadExecutor = threadExecutor;
@@ -45,6 +43,7 @@ public class PhotoDetailPresenter extends BasePresenter<PhotoDetailContract.View
                 if (view != null) {
                     view.showComments(comments);
                     view.setProgressBar(false);
+                    view.shouldShowPlaceholderText();
                 }
             }
 
@@ -53,6 +52,7 @@ public class PhotoDetailPresenter extends BasePresenter<PhotoDetailContract.View
                 if (view != null) {
                     view.setProgressBar(false);
                     view.showToastMessage(context.getString(R.string.error_msg));
+                    view.shouldShowPlaceholderText();
                 }
             }
 
@@ -61,6 +61,7 @@ public class PhotoDetailPresenter extends BasePresenter<PhotoDetailContract.View
                 if (view != null) {
                     view.setProgressBar(false);
                     view.showToastMessage(context.getString(R.string.network_failure_msg));
+                    view.shouldShowPlaceholderText();
                 }
             }
         });

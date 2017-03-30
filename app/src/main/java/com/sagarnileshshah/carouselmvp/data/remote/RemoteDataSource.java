@@ -9,8 +9,6 @@ import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
 import java.util.HashMap;
 import java.util.Map;
 
-import retrofit2.Retrofit;
-
 public class RemoteDataSource extends DataSource {
 
     public static final String QUERY_PARAM_PHOTO_ID = "photo_id";
@@ -33,15 +31,15 @@ public class RemoteDataSource extends DataSource {
     private ApiService apiService;
 
     private RemoteDataSource(MainUiThread mainUiThread,
-                             ThreadExecutor threadExecutor, ApiService apiService) {
+            ThreadExecutor threadExecutor, ApiService apiService) {
         super(mainUiThread, threadExecutor);
         this.apiService = apiService;
 
     }
 
     public static synchronized RemoteDataSource getInstance(MainUiThread mainUiThread,
-                                                            ThreadExecutor threadExecutor,
-                                                            ApiService apiService) {
+            ThreadExecutor threadExecutor,
+            ApiService apiService) {
         if (remoteDataSource == null) {
 
             remoteDataSource = new RemoteDataSource(mainUiThread, threadExecutor, apiService);
@@ -57,24 +55,35 @@ public class RemoteDataSource extends DataSource {
         queryMap.put(QUERY_PARAM_PER_PAGE, QUERY_PARAM_VALUE_PER_PAGE);
         queryMap.put(QUERY_PARAM_PAGE, String.valueOf(page));
 
-        retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.photo.Response> call = apiService.getPhotos(queryMap);
+        retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.photo.Response> call =
+                apiService.getPhotos(queryMap);
 
-        call.enqueue(new retrofit2.Callback<com.sagarnileshshah.carouselmvp.data.models.photo.Response>() {
-            @Override
-            public void onResponse(retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.photo.Response> call, retrofit2.Response<com.sagarnileshshah.carouselmvp.data.models.photo.Response> response) {
-                if (response.isSuccessful()) {
-                    com.sagarnileshshah.carouselmvp.data.models.photo.Response photoResponse = response.body();
-                    callback.onSuccess(photoResponse.getPhotos().getPhoto());
-                } else {
-                    callback.onFailure(new Throwable());
-                }
-            }
+        call.enqueue(
+                new retrofit2.Callback<com.sagarnileshshah.carouselmvp.data.models.photo
+                        .Response>() {
+                    @Override
+                    public void onResponse(
+                            retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.photo
+                                    .Response> call,
+                            retrofit2.Response<com.sagarnileshshah.carouselmvp.data.models.photo
+                                    .Response> response) {
+                        if (response.isSuccessful()) {
+                            com.sagarnileshshah.carouselmvp.data.models.photo.Response
+                                    photoResponse = response.body();
+                            callback.onSuccess(photoResponse.getPhotos().getPhoto());
+                        } else {
+                            callback.onFailure(new Throwable());
+                        }
+                    }
 
-            @Override
-            public void onFailure(retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.photo.Response> call, Throwable t) {
-                callback.onFailure(t);
-            }
-        });
+                    @Override
+                    public void onFailure(
+                            retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.photo
+                                    .Response> call,
+                            Throwable t) {
+                        callback.onFailure(t);
+                    }
+                });
     }
 
     @Override
@@ -83,23 +92,34 @@ public class RemoteDataSource extends DataSource {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(QUERY_PARAM_METHOD, COMMENTS_ENDPOINT);
 
-        retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.comment.Response> call = apiService.getComments(photoId, queryMap);
+        retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.comment.Response> call =
+                apiService.getComments(photoId, queryMap);
 
-        call.enqueue(new retrofit2.Callback<com.sagarnileshshah.carouselmvp.data.models.comment.Response>() {
-            @Override
-            public void onResponse(retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.comment.Response> call, retrofit2.Response<com.sagarnileshshah.carouselmvp.data.models.comment.Response> response) {
-                if (response.isSuccessful()) {
-                    com.sagarnileshshah.carouselmvp.data.models.comment.Response commentsResponse = response.body();
-                    callback.onSuccess(commentsResponse.getComments().getComment());
-                } else {
-                    callback.onFailure(new Throwable());
-                }
-            }
+        call.enqueue(
+                new retrofit2.Callback<com.sagarnileshshah.carouselmvp.data.models.comment
+                        .Response>() {
+                    @Override
+                    public void onResponse(
+                            retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.comment
+                                    .Response> call,
+                            retrofit2.Response<com.sagarnileshshah.carouselmvp.data.models
+                                    .comment.Response> response) {
+                        if (response.isSuccessful()) {
+                            com.sagarnileshshah.carouselmvp.data.models.comment.Response
+                                    commentsResponse = response.body();
+                            callback.onSuccess(commentsResponse.getComments().getComment());
+                        } else {
+                            callback.onFailure(new Throwable());
+                        }
+                    }
 
-            @Override
-            public void onFailure(retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.comment.Response> call, Throwable t) {
-                callback.onFailure(t);
-            }
-        });
+                    @Override
+                    public void onFailure(
+                            retrofit2.Call<com.sagarnileshshah.carouselmvp.data.models.comment
+                                    .Response> call,
+                            Throwable t) {
+                        callback.onFailure(t);
+                    }
+                });
     }
 }

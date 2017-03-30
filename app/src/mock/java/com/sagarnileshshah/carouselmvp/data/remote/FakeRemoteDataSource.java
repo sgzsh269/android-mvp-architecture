@@ -26,8 +26,9 @@ public class FakeRemoteDataSource extends DataSource {
 
     }
 
-    public static synchronized FakeRemoteDataSource getInstance(MainUiThread mainUiThread, ThreadExecutor threadExecutor) {
-        if(fakeRemoteDataSource == null) {
+    public static synchronized FakeRemoteDataSource getInstance(MainUiThread mainUiThread,
+            ThreadExecutor threadExecutor) {
+        if (fakeRemoteDataSource == null) {
             fakeRemoteDataSource = new FakeRemoteDataSource(mainUiThread, threadExecutor);
         }
         return fakeRemoteDataSource;

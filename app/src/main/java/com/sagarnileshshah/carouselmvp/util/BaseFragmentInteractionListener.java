@@ -8,5 +8,6 @@ public interface BaseFragmentInteractionListener {
 
     void resetToolBarScroll();
 
-    <T extends Fragment> void showFragment(Class<T> fragmentClass, Bundle bundle, boolean addToBackStack);
+    <T extends Fragment> void showFragment(Class<T> fragmentClass, Bundle bundle,
+            boolean addToBackStack);
 }

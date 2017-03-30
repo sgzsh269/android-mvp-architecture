@@ -9,7 +9,8 @@ import com.sagarnileshshah.carouselmvp.R;
   Source: http://www.littlerobots.nl/blog/Handle-Android-RecyclerView-Clicks/
   USAGE:
 
-  ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+  ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport
+  .OnItemClickListener() {
       @Override
       public void onItemClicked(RecyclerView recyclerView, int position, View v) {
           // do it
@@ -34,28 +35,30 @@ public class ItemClickSupport {
         public boolean onLongClick(View v) {
             if (mOnItemLongClickListener != null) {
                 RecyclerView.ViewHolder holder = mRecyclerView.getChildViewHolder(v);
-                return mOnItemLongClickListener.onItemLongClicked(mRecyclerView, holder.getAdapterPosition(), v);
+                return mOnItemLongClickListener.onItemLongClicked(mRecyclerView,
+                        holder.getAdapterPosition(), v);
             }
             return false;
         }
     };
-    private RecyclerView.OnChildAttachStateChangeListener mAttachListener
-            = new RecyclerView.OnChildAttachStateChangeListener() {
-        @Override
-        public void onChildViewAttachedToWindow(View view) {
-            if (mOnItemClickListener != null) {
-                view.setOnClickListener(mOnClickListener);
-            }
-            if (mOnItemLongClickListener != null) {
-                view.setOnLongClickListener(mOnLongClickListener);
-            }
-        }
 
-        @Override
-        public void onChildViewDetachedFromWindow(View view) {
+    private RecyclerView.OnChildAttachStateChangeListener mAttachListener =
+            new RecyclerView.OnChildAttachStateChangeListener() {
+                @Override
+                public void onChildViewAttachedToWindow(View view) {
+                    if (mOnItemClickListener != null) {
+                        view.setOnClickListener(mOnClickListener);
+                    }
+                    if (mOnItemLongClickListener != null) {
+                        view.setOnLongClickListener(mOnLongClickListener);
+                    }
+                }
 
-        }
-    };
+                @Override
+                public void onChildViewDetachedFromWindow(View view) {
+
+                }
+            };
 
     private ItemClickSupport(RecyclerView recyclerView) {
         mRecyclerView = recyclerView;

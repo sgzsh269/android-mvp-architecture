@@ -17,7 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecyclerAdapter.ViewHolder> {
+public class CommentsRecyclerAdapter extends
+        RecyclerView.Adapter<CommentsRecyclerAdapter.ViewHolder> {
 
     private List<Comment> comments;
 
@@ -47,7 +48,8 @@ public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecycl
 
         View view = inflater.inflate(R.layout.item_comment, parent, false);
 
-        CommentsRecyclerAdapter.ViewHolder viewHolder = new CommentsRecyclerAdapter.ViewHolder(view);
+        CommentsRecyclerAdapter.ViewHolder viewHolder = new CommentsRecyclerAdapter.ViewHolder(
+                view);
         return viewHolder;
     }
 

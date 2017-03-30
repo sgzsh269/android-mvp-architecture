@@ -24,6 +24,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import android.content.Context;
+
 @RunWith(MockitoJUnitRunner.class)
 public class PhotoPresenterTest {
 
@@ -39,50 +41,56 @@ public class PhotoPresenterTest {
     @Mock
     private MainUiThread mockMainUiThread;
 
+    @Mock
+    Context mockContext;
+
     @Captor
     private ArgumentCaptor<DataSource.GetPhotosCallback> getPhotosCallbackCaptor;
 
     private PhotosPresenter photosPresenter;
 
     @Before
-    public void setup(){
+    public void setup() {
 
-        photosPresenter = new PhotosPresenter(mockView, mockDataRepository, mockThreadExecutor, mockMainUiThread);
+        photosPresenter = new PhotosPresenter(mockView, mockDataRepository, mockThreadExecutor,
+                mockMainUiThread);
 
     }
 
     @Test
     public void getPhotos_testWithActiveView() {
         int page = 2;
-        photosPresenter.getPhotos(page);
+        photosPresenter.getPhotos(mockContext, page);
 
-        verify(mockView).showProgressBar();
-        verify(mockDataRepository).getPhotos(eq(mockView.getContext()), eq(page), getPhotosCallbackCaptor.capture());
+        verify(mockView).setProgressBar(true);
+        verify(mockDataRepository).getPhotos(eq(mockContext), eq(page),
+                getPhotosCallbackCaptor.capture());
 
         DataSource.GetPhotosCallback getPhotosCallback = getPhotosCallbackCaptor.getValue();
         List<Photo> photos = new ArrayList<>();
 
-        photosPresenter.onResume(mockView);
+        photosPresenter.onViewActive(mockView);
         getPhotosCallback.onSuccess(photos);
         verify(mockView).showPhotos(photos);
-        verify(mockView).hideProgressBar();
+        verify(mockView).setProgressBar(false);
     }
 
     @Test
     public void getPhotos_testWithNonActiveView() {
         int page = 2;
-        photosPresenter.getPhotos(page);
+        photosPresenter.getPhotos(mockContext, page);
 
-        verify(mockView).showProgressBar();
-        verify(mockDataRepository).getPhotos(eq(mockView.getContext()), eq(page), getPhotosCallbackCaptor.capture());
+        verify(mockView).setProgressBar(true);
+        verify(mockDataRepository).getPhotos(eq(mockContext), eq(page),
+                getPhotosCallbackCaptor.capture());
 
         DataSource.GetPhotosCallback getPhotosCallback = getPhotosCallbackCaptor.getValue();
         List<Photo> photos = new ArrayList<>();
 
-        photosPresenter.onPause();
+        photosPresenter.onViewInactive();
         getPhotosCallback.onSuccess(photos);
         verify(mockView, never()).showPhotos(photos);
-        verify(mockView, never()).hideProgressBar();
+        verify(mockView, never()).setProgressBar(false);
     }
 
 

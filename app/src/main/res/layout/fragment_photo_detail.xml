@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/ivPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"/>
 
         <TextView
             android:id="@+id/tvTitle"
@@ -23,14 +24,14 @@
             android:layout_marginLeft="@dimen/title_marginLeftRight"
             android:layout_marginRight="@dimen/title_marginLeftRight"
             android:fontFamily="sans-serif-black"
-            android:textSize="@dimen/title_textSize" />
+            android:textSize="@dimen/title_textSize"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvComments"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tvTitle"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="@dimen/comments_marginTop"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -38,7 +39,21 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:visibility="gone" />
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tvPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTitle"
+            android:layout_marginTop="@dimen/comments_marginTop"
+            android:layout_marginLeft="@dimen/comment_marginLeftRight"
+            android:layout_marginRight="@dimen/comment_marginLeftRight"
+            android:fontFamily="sans-serif"
+            android:text="@string/no_comments_available"
+            android:textSize="@dimen/title_textSize"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
 

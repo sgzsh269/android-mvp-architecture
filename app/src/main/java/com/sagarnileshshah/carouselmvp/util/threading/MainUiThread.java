@@ -5,23 +5,23 @@ import android.os.Looper;
 
 public class MainUiThread {
 
-  private static MainUiThread mainUiThread;
+    private static MainUiThread mainUiThread;
 
-  private Handler handler;
+    private Handler handler;
 
-  private MainUiThread() {
-    handler = new Handler(Looper.getMainLooper());
-  }
-
-  public static synchronized MainUiThread getInstance() {
-    if (mainUiThread == null) {
-      mainUiThread = new MainUiThread();
+    private MainUiThread() {
+        handler = new Handler(Looper.getMainLooper());
     }
-    return mainUiThread;
-  }
 
-  public void post(Runnable runnable) {
-    handler.post(runnable);
-  }
+    public static synchronized MainUiThread getInstance() {
+        if (mainUiThread == null) {
+            mainUiThread = new MainUiThread();
+        }
+        return mainUiThread;
+    }
+
+    public void post(Runnable runnable) {
+        handler.post(runnable);
+    }
 
 }

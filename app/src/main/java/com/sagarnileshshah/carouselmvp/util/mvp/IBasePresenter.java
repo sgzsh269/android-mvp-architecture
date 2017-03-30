@@ -1,9 +1,9 @@
 package com.sagarnileshshah.carouselmvp.util.mvp;
 
 
-public interface IBasePresenter<View> {
+public interface IBasePresenter<ViewT> {
 
-    void onViewActive(View View);
+    void onViewActive(ViewT view);
 
     void onViewInactive();
 }

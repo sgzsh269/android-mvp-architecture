@@ -25,13 +25,14 @@ public class LocalDataSource extends DataSource {
 
     private DatabaseDefinition databaseDefinition;
 
-    private LocalDataSource(MainUiThread mainUiThread, ThreadExecutor threadExecutor, DatabaseDefinition databaseDefinition) {
+    private LocalDataSource(MainUiThread mainUiThread, ThreadExecutor threadExecutor,
+            DatabaseDefinition databaseDefinition) {
         super(mainUiThread, threadExecutor);
         this.databaseDefinition = databaseDefinition;
     }
 
     public static synchronized LocalDataSource getInstance(MainUiThread mainUiThread,
-                                                           ThreadExecutor threadExecutor, DatabaseDefinition databaseDefinition) {
+            ThreadExecutor threadExecutor, DatabaseDefinition databaseDefinition) {
         if (localDataSource == null) {
             localDataSource = new LocalDataSource(mainUiThread, threadExecutor, databaseDefinition);
         }
@@ -85,27 +86,29 @@ public class LocalDataSource extends DataSource {
 
 
     public void storePhotos(final List<Photo> photos) {
-        Transaction transaction = databaseDefinition.beginTransactionAsync(new ITransaction() {
-            @Override
-            public void execute(DatabaseWrapper databaseWrapper) {
-                for (Photo photo : photos) {
-                    photo.save();
-                }
-            }
-        }).build();
+        Transaction transaction = databaseDefinition.beginTransactionAsync(
+                new ITransaction() {
+                    @Override
+                    public void execute(DatabaseWrapper databaseWrapper) {
+                        for (Photo photo : photos) {
+                            photo.save();
+                        }
+                    }
+                }).build();
         transaction.execute();
     }
 
     public void storeComments(final Photo photo, final List<Comment> comments) {
-        Transaction transaction = databaseDefinition.beginTransactionAsync(new ITransaction() {
-            @Override
-            public void execute(DatabaseWrapper databaseWrapper) {
-                for (Comment comment : comments) {
-                    comment.setPhoto(photo);
-                    comment.save();
-                }
-            }
-        }).build();
+        Transaction transaction = databaseDefinition.beginTransactionAsync(
+                new ITransaction() {
+                    @Override
+                    public void execute(DatabaseWrapper databaseWrapper) {
+                        for (Comment comment : comments) {
+                            comment.setPhoto(photo);
+                            comment.save();
+                        }
+                    }
+                }).build();
         transaction.execute();
     }
 }

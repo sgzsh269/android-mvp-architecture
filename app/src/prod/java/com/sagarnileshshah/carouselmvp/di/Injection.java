@@ -26,43 +26,49 @@ import static com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource.API_K
 import static com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource.BASE_API_URL;
 import static com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource.QUERY_PARAM_API_KEY;
 import static com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource.QUERY_PARAM_FORMAT;
-import static com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource.QUERY_PARAM_NO_JSON_CALLBACK;
+import static com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource
+        .QUERY_PARAM_NO_JSON_CALLBACK;
 import static com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource.QUERY_PARAM_VALUE_JSON;
-import static com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource.QUERY_PARAM_VALUE_NO_JSON_CALLBACK;
+import static com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource
+        .QUERY_PARAM_VALUE_NO_JSON_CALLBACK;
 
 public class Injection {
 
-    public static DataRepository provideDataRepository(MainUiThread mainUiThread, ThreadExecutor threadExecutor, DatabaseDefinition databaseDefinition) {
+    public static DataRepository provideDataRepository(MainUiThread mainUiThread,
+            ThreadExecutor threadExecutor, DatabaseDefinition databaseDefinition) {
 
 
-            Interceptor interceptor = new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    HttpUrl httpUrl = chain.request().url().newBuilder()
-                            .addQueryParameter(QUERY_PARAM_API_KEY, API_KEY)
-                            .addQueryParameter(QUERY_PARAM_NO_JSON_CALLBACK, QUERY_PARAM_VALUE_NO_JSON_CALLBACK)
-                            .addQueryParameter(QUERY_PARAM_FORMAT, QUERY_PARAM_VALUE_JSON)
-                            .build();
-                    Request newRequest = chain.request().newBuilder().url(httpUrl).build();
-                    return chain.proceed(newRequest);
-                }
-            };
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                HttpUrl httpUrl = chain.request().url().newBuilder()
+                        .addQueryParameter(QUERY_PARAM_API_KEY, API_KEY)
+                        .addQueryParameter(QUERY_PARAM_NO_JSON_CALLBACK,
+                                QUERY_PARAM_VALUE_NO_JSON_CALLBACK)
+                        .addQueryParameter(QUERY_PARAM_FORMAT, QUERY_PARAM_VALUE_JSON)
+                        .build();
+                Request newRequest = chain.request().newBuilder().url(httpUrl).build();
+                return chain.proceed(newRequest);
+            }
+        };
 
-            OkHttpClient okHttpClient =
-                    new OkHttpClient.Builder()
-                            .addNetworkInterceptor(new StethoInterceptor())
-                            .addInterceptor(interceptor)
-                            .build();
+        OkHttpClient okHttpClient =
+                new OkHttpClient.Builder()
+                        .addNetworkInterceptor(new StethoInterceptor())
+                        .addInterceptor(interceptor)
+                        .build();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_API_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(okHttpClient)
-                    .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
 
         ApiService apiService = retrofit.create(ApiService.class);
 
-        return DataRepository.getInstance(RemoteDataSource.getInstance(mainUiThread, threadExecutor, apiService),
-                LocalDataSource.getInstance(mainUiThread, threadExecutor, databaseDefinition), NetworkHelper.getInstance());
+        return DataRepository.getInstance(
+                RemoteDataSource.getInstance(mainUiThread, threadExecutor, apiService),
+                LocalDataSource.getInstance(mainUiThread, threadExecutor, databaseDefinition),
+                NetworkHelper.getInstance());
     }
 }

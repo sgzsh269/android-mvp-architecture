@@ -12,14 +12,15 @@ import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
 
 import java.util.List;
 
-public class PhotosPresenter extends BasePresenter<PhotosContract.View> implements PhotosContract.Presenter {
+public class PhotosPresenter extends BasePresenter<PhotosContract.View> implements
+        PhotosContract.Presenter {
 
     private DataRepository dataRepository;
     private ThreadExecutor threadExecutor;
     private MainUiThread mainUiThread;
 
     public PhotosPresenter(PhotosContract.View view, DataRepository dataRepository,
-                           ThreadExecutor threadExecutor, MainUiThread mainUiThread) {
+            ThreadExecutor threadExecutor, MainUiThread mainUiThread) {
         this.view = view;
         this.dataRepository = dataRepository;
         this.threadExecutor = threadExecutor;
@@ -40,6 +41,7 @@ public class PhotosPresenter extends BasePresenter<PhotosContract.View> implemen
                 if (view != null) {
                     view.showPhotos(photos);
                     view.setProgressBar(false);
+                    view.shouldShowPlaceholderText();
                 }
             }
 
@@ -48,6 +50,7 @@ public class PhotosPresenter extends BasePresenter<PhotosContract.View> implemen
                 if (view != null) {
                     view.setProgressBar(false);
                     view.showToastMessage(context.getString(R.string.error_msg));
+                    view.shouldShowPlaceholderText();
                 }
             }
 
@@ -56,6 +59,7 @@ public class PhotosPresenter extends BasePresenter<PhotosContract.View> implemen
                 if (view != null) {
                     view.setProgressBar(false);
                     view.showToastMessage(context.getString(R.string.network_failure_msg));
+                    view.shouldShowPlaceholderText();
                 }
             }
         });

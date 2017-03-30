@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -46,12 +48,22 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
     @BindView(R.id.rvPhotos)
     RecyclerView rvPhotos;
 
+    @BindView(R.id.tvPlaceholder)
+    TextView tvPlaceholder;
+
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+
+    public static final int STARTING_PAGE_INDEX = 1;
+
     private PhotosRecyclerAdapter recyclerAdapter;
     private List<Photo> photos;
     private EndlessRecyclerViewScrollListener endlessScrollListener;
     private PhotosContract.Presenter presenter;
     private boolean isCreated;
     private BaseFragmentInteractionListener fragmentInteractionListener;
+    private boolean shouldRefreshPhotos;
 
 
     @Override
@@ -61,7 +73,8 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
         ThreadExecutor threadExecutor = ThreadExecutor.getInstance();
         MainUiThread mainUiThread = MainUiThread.getInstance();
         DatabaseDefinition databaseDefinition = FlowManager.getDatabase(LocalDatabase.class);
-        DataRepository dataRepository = Injection.provideDataRepository(mainUiThread, threadExecutor, databaseDefinition);
+        DataRepository dataRepository = Injection.provideDataRepository(mainUiThread,
+                threadExecutor, databaseDefinition);
         presenter = new PhotosPresenter(this, dataRepository, threadExecutor, mainUiThread);
         isCreated = true;
         setRetainInstance(true);
@@ -69,7 +82,7 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_photos, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -83,7 +96,8 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPhotos.setLayoutManager(linearLayoutManager);
 
-        endlessScrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+        endlessScrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager,
+                STARTING_PAGE_INDEX) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 getPhotos(page);
@@ -92,16 +106,28 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
 
         rvPhotos.addOnScrollListener(endlessScrollListener);
 
-        ItemClickSupport.addTo(rvPhotos).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+        ItemClickSupport.addTo(rvPhotos).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Photo photo = photos.get(position);
+                        Parcelable parcelable = Parcels.wrap(photo);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable(Properties.BUNDLE_KEY_PHOTO, parcelable);
+                        fragmentInteractionListener.showFragment(PhotoDetailFragment.class, bundle,
+                                true);
+                    }
+                });
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Photo photo = photos.get(position);
-                Parcelable parcelable = Parcels.wrap(photo);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(Properties.BUNDLE_KEY_PHOTO, parcelable);
-                fragmentInteractionListener.showFragment(PhotoDetailFragment.class, bundle, true);
+            public void onRefresh() {
+                refreshPhotos();
             }
         });
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorPrimary);
     }
 
     @Override
@@ -117,17 +143,29 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
 
     @Override
     public void showPhotos(List<Photo> photos) {
-        this.photos.addAll(photos);
-        recyclerAdapter.notifyItemRangeInserted(this.photos.size(), photos.size());
+        if (shouldRefreshPhotos) {
+            recyclerAdapter.clear();
+            endlessScrollListener.resetState();
+            shouldRefreshPhotos = false;
+        }
+        recyclerAdapter.addAll(photos);
     }
 
+    @Override
+    public void shouldShowPlaceholderText() {
+        if (photos.isEmpty()) {
+            tvPlaceholder.setVisibility(View.VISIBLE);
+        } else {
+            tvPlaceholder.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         presenter.onViewActive(this);
         if (isCreated) {
-            getPhotos(1);
+            getPhotos(STARTING_PAGE_INDEX);
             isCreated = false;
         }
 
@@ -143,4 +181,15 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
     private void getPhotos(int page) {
         presenter.getPhotos(getContext().getApplicationContext(), page);
     }
+
+    private void refreshPhotos() {
+        shouldRefreshPhotos = true;
+        getPhotos(STARTING_PAGE_INDEX);
+    }
+
+    @Override
+    public void setProgressBar(boolean show) {
+        swipeRefreshLayout.setRefreshing(show);
+    }
+
 }

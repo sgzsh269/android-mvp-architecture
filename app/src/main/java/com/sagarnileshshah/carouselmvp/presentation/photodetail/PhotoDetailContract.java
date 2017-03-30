@@ -17,6 +17,8 @@ interface PhotoDetailContract {
         void showPhoto(Photo photo);
 
         void showComments(List<Comment> comments);
+
+        void shouldShowPlaceholderText();
     }
 
     interface Presenter extends IBasePresenter<View> {
