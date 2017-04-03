@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.sagarnileshshah.carouselmvp.R;
 
-/*
+/**
   Source: http://www.littlerobots.nl/blog/Handle-Android-RecyclerView-Clicks/
   USAGE:
 

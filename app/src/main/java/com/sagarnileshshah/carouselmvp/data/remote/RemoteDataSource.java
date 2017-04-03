@@ -9,6 +9,10 @@ import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The class for fetching data from Flickr API on a background thread and returning data via
+ * callbacks on the main UI thread
+ */
 public class RemoteDataSource extends DataSource {
 
     public static final String QUERY_PARAM_PHOTO_ID = "photo_id";

@@ -12,7 +12,10 @@ import android.view.MenuItem;
 import com.sagarnileshshah.carouselmvp.R;
 
 /**
- * Fragment Oriented Architecture based Activity
+ * The abstract base container responsible for showing and destroying {@link Fragment} and handling
+ * back and up navigation using the Fragment back stack. This is based on the
+ * Fragment Oriented Architecture explained here
+ * http://vinsol.com/blog/2014/09/15/advocating-fragment-oriented-applications-in-android/
  */
 public abstract class FoaBaseActivity extends AppCompatActivity implements
         FragmentManager.OnBackStackChangedListener {

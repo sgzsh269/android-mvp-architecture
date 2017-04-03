@@ -1,6 +1,5 @@
 package com.sagarnileshshah.carouselmvp.presentation.photos;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -12,9 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,14 +20,11 @@ import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.sagarnileshshah.carouselmvp.R;
 import com.sagarnileshshah.carouselmvp.data.DataRepository;
-import com.sagarnileshshah.carouselmvp.data.local.LocalDataSource;
 import com.sagarnileshshah.carouselmvp.data.local.LocalDatabase;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
-import com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource;
 import com.sagarnileshshah.carouselmvp.di.Injection;
 import com.sagarnileshshah.carouselmvp.presentation.photodetail.PhotoDetailFragment;
 import com.sagarnileshshah.carouselmvp.util.BaseFragmentInteractionListener;
-import com.sagarnileshshah.carouselmvp.util.FoaBaseActivity;
 import com.sagarnileshshah.carouselmvp.util.ItemClickSupport;
 import com.sagarnileshshah.carouselmvp.util.Properties;
 import com.sagarnileshshah.carouselmvp.util.mvp.BaseView;
@@ -43,6 +37,11 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@link Fragment} that receives photo data from its {@link PhotosContract.Presenter} and
+ * renders a list of photos and also handles user actions, such as clicks on photos,
+ * and passes it to its {@link PhotosContract.Presenter}.
+ */
 public class PhotosFragment extends BaseView implements PhotosContract.View {
 
     @BindView(R.id.rvPhotos)
@@ -110,12 +109,7 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
                 new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Photo photo = photos.get(position);
-                        Parcelable parcelable = Parcels.wrap(photo);
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable(Properties.BUNDLE_KEY_PHOTO, parcelable);
-                        fragmentInteractionListener.showFragment(PhotoDetailFragment.class, bundle,
-                                true);
+                        showDetailFragment(position);
                     }
                 });
 
@@ -190,6 +184,15 @@ public class PhotosFragment extends BaseView implements PhotosContract.View {
     @Override
     public void setProgressBar(boolean show) {
         swipeRefreshLayout.setRefreshing(show);
+    }
+
+    private void showDetailFragment(int photoPosition) {
+        Photo photo = photos.get(photoPosition);
+        Parcelable parcelable = Parcels.wrap(photo);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Properties.BUNDLE_KEY_PHOTO, parcelable);
+        fragmentInteractionListener.showFragment(PhotoDetailFragment.class, bundle,
+                true);
     }
 
 }

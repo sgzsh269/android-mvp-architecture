@@ -10,6 +10,9 @@ import com.sagarnileshshah.carouselmvp.util.mvp.IBaseView;
 
 import java.util.List;
 
+/**
+ * The interface that exposes the functionalities of a Photo Detail View and Presenter
+ */
 interface PhotoDetailContract {
 
     interface View extends IBaseView {

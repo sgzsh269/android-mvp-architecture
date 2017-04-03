@@ -46,6 +46,12 @@ import java.util.List;
 
 import static com.sagarnileshshah.carouselmvp.util.Properties.PHOTO_URL;
 
+/**
+ * The {@link Fragment} that receives photo data from
+ * {@link com.sagarnileshshah.carouselmvp.presentation.photos.PhotosFragment}
+ * via a {@link Bundle} and comment data from its
+ * {@link PhotoDetailContract.Presenter}. It then renders the photo and its list of comments.
+ */
 public class PhotoDetailFragment extends BaseView implements PhotoDetailContract.View {
 
     @BindView(R.id.ivPhoto)

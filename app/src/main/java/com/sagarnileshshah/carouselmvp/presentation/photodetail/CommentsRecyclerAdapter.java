@@ -16,7 +16,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+/**
+ * The {@link android.support.v7.widget.RecyclerView.Adapter} that renders and populates each
+ * comment in the comments list.
+ */
 public class CommentsRecyclerAdapter extends
         RecyclerView.Adapter<CommentsRecyclerAdapter.ViewHolder> {
 
@@ -60,7 +63,6 @@ public class CommentsRecyclerAdapter extends
 
         viewHolder.tvContent.setText(comment.getContent());
         viewHolder.tvAuthor.setText(comment.getRealname());
-
     }
 
     @Override

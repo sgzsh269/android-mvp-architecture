@@ -1,9 +1,12 @@
 package com.sagarnileshshah.carouselmvp.util.mvp;
 
-/**
- * Created by sshah on 3/29/17.
- */
 
+/**
+ * Abstract base class to be extended by any MVP Presenter. It contains common attributes and
+ * methods to be shared across Presenters.
+ *
+ * @param <ViewT> a generic type to indicate a type of MVP View
+ */
 public class BasePresenter<ViewT> implements IBasePresenter<ViewT> {
 
     protected ViewT view;

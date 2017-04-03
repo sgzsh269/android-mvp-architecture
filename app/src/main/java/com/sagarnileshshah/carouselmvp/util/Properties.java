@@ -1,9 +1,5 @@
 package com.sagarnileshshah.carouselmvp.util;
 
-/**
- * Created by sshah on 3/26/17.
- */
-
 public class Properties {
 
     public static final String BUNDLE_KEY_PHOTO = "BUNDLE_KEY_PHOTO";

@@ -7,6 +7,12 @@ import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
 
 import java.util.List;
 
+/**
+ * The interface that exposes fetching and storing data through helper methods. This is to be
+ * implemented by all data sources such as
+ * {@link com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource} and
+ * {@link com.sagarnileshshah.carouselmvp.data.local.LocalDataSource}
+ */
 public abstract class DataSource {
 
     protected MainUiThread mainUiThread;

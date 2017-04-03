@@ -3,6 +3,9 @@ package com.sagarnileshshah.carouselmvp.util.threading;
 import android.os.Handler;
 import android.os.Looper;
 
+/**
+ * A singleton wrapper around {@link Handler} that helps to post work to the main UI thread.
+ */
 public class MainUiThread {
 
     private static MainUiThread mainUiThread;

@@ -5,6 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
+/**
+ * A listener to be added to {@link RecyclerView#addOnScrollListener(RecyclerView.OnScrollListener)}
+ * to handle pagination on scrolling.
+ * Code taken from https://gist.github.com/nesquena/d09dc68ff07e845cc622
+ */
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position
     // before loading more.
@@ -21,18 +26,21 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
 
     RecyclerView.LayoutManager layoutManager;
 
-    public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager, int startingPageIndex) {
+    public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager,
+            int startingPageIndex) {
         this.layoutManager = layoutManager;
         this.startingPageIndex = startingPageIndex;
     }
 
-    public EndlessRecyclerViewScrollListener(GridLayoutManager layoutManager, int startingPageIndex) {
+    public EndlessRecyclerViewScrollListener(GridLayoutManager layoutManager,
+            int startingPageIndex) {
         this.layoutManager = layoutManager;
         visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
         this.startingPageIndex = startingPageIndex;
     }
 
-    public EndlessRecyclerViewScrollListener(StaggeredGridLayoutManager layoutManager, int startingPageIndex) {
+    public EndlessRecyclerViewScrollListener(StaggeredGridLayoutManager layoutManager,
+            int startingPageIndex) {
         this.layoutManager = layoutManager;
         visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
         this.startingPageIndex = startingPageIndex;

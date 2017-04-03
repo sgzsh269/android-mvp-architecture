@@ -9,7 +9,7 @@ import com.sagarnileshshah.carouselmvp.util.mvp.IBaseView;
 import java.util.List;
 
 /**
- *
+ * The interface that exposes the functionalities of a Photo View and Presenter
  */
 interface PhotosContract {
 

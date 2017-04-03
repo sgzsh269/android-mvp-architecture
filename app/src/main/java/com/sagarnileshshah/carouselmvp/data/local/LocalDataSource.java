@@ -1,24 +1,24 @@
 package com.sagarnileshshah.carouselmvp.data.local;
 
-import android.support.annotation.NonNull;
 
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
-import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
-import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 import com.sagarnileshshah.carouselmvp.data.DataSource;
 import com.sagarnileshshah.carouselmvp.data.models.comment.Comment;
 import com.sagarnileshshah.carouselmvp.data.models.comment.Comment_Table;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
-import com.sagarnileshshah.carouselmvp.data.models.photo.Photo_Table;
 import com.sagarnileshshah.carouselmvp.util.threading.MainUiThread;
 import com.sagarnileshshah.carouselmvp.util.threading.ThreadExecutor;
 
 import java.util.List;
 
+/**
+ * The class for fetching from and storing data into a local SQLite DB on a background thread and
+ * returning data via callbacks on the main UI thread
+ */
 public class LocalDataSource extends DataSource {
 
     private static LocalDataSource localDataSource;

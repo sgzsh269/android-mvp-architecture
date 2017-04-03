@@ -20,6 +20,10 @@ import java.util.List;
 
 import static com.sagarnileshshah.carouselmvp.util.Properties.PHOTO_URL;
 
+/**
+ * The {@link android.support.v7.widget.RecyclerView.Adapter} that renders and populates each photo
+ * in the photos list.
+ */
 public class PhotosRecyclerAdapter extends RecyclerView.Adapter<PhotosRecyclerAdapter.ViewHolder> {
 
     private List<Photo> photos;

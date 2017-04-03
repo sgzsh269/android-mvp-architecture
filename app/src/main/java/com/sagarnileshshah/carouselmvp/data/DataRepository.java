@@ -1,6 +1,5 @@
 package com.sagarnileshshah.carouselmvp.data;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.sagarnileshshah.carouselmvp.data.local.LocalDataSource;
@@ -10,6 +9,15 @@ import com.sagarnileshshah.carouselmvp.util.NetworkHelper;
 
 import java.util.List;
 
+/**
+ * The primary class for the presenters that extend
+ * {@link com.sagarnileshshah.carouselmvp.util.mvp.BasePresenter} to interact with
+ * for fetching and storing data.
+ * It is the middleman in front of all data sources such as
+ * {@link com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource}
+ * and {@link com.sagarnileshshah.carouselmvp.data.local.LocalDataSource} and delegates the work to
+ * them depending on conditions such as network availability, etc.
+ */
 public class DataRepository {
 
     private DataSource remoteDataSource;

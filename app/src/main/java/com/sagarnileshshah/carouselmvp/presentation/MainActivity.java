@@ -36,6 +36,12 @@ import com.sagarnileshshah.carouselmvp.util.NetworkHelper;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.view.View.GONE;
 
+/**
+ * The container responsible for showing and destroying relevant {@link Fragment}, handling
+ * back and up navigation using the Fragment back stack and maintaining global state
+ * and event subscriptions. This is based on the Fragment Oriented Architecture explained here
+ * http://vinsol.com/blog/2014/09/15/advocating-fragment-oriented-applications-in-android/
+ */
 public class MainActivity extends FoaBaseActivity implements BaseFragmentInteractionListener {
 
     @BindView(R.id.fragmentPlaceHolder)
