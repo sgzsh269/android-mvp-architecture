@@ -38,9 +38,9 @@ public abstract class FoaBaseActivity extends AppCompatActivity implements
                 fragment = fragmentClass.newInstance();
                 fragment.setArguments(bundle);
             } catch (InstantiationException e) {
-                e.printStackTrace();
+                throw new RuntimeException("New Fragment should have been created", e);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                throw new RuntimeException("New Fragment should have been created", e);
             }
         }
 

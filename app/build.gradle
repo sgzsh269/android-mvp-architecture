@@ -89,12 +89,3 @@ dependencies {
     annotationProcessor "org.parceler:parceler:${parcelerVersion}"
 }
 
-def props(c) {
-    println('this is called')
-    c();
-}
-
-def load() {
-
-}
-

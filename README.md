@@ -5,6 +5,7 @@
 ### App Demo
 ![Carousel Demo](/carousel_demo.gif)
 
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ### License 
 ```
