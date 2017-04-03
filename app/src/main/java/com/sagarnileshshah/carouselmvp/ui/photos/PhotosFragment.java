@@ -1,4 +1,4 @@
-package com.sagarnileshshah.carouselmvp.presentation.photos;
+package com.sagarnileshshah.carouselmvp.ui.photos;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import com.sagarnileshshah.carouselmvp.data.DataRepository;
 import com.sagarnileshshah.carouselmvp.data.local.LocalDatabase;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
 import com.sagarnileshshah.carouselmvp.di.Injection;
-import com.sagarnileshshah.carouselmvp.presentation.photodetail.PhotoDetailFragment;
+import com.sagarnileshshah.carouselmvp.ui.photodetail.PhotoDetailFragment;
 import com.sagarnileshshah.carouselmvp.util.BaseFragmentInteractionListener;
 import com.sagarnileshshah.carouselmvp.util.ItemClickSupport;
 import com.sagarnileshshah.carouselmvp.util.Properties;

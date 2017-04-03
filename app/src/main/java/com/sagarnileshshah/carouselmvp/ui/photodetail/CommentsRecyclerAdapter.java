@@ -1,4 +1,4 @@
-package com.sagarnileshshah.carouselmvp.presentation.photodetail;
+package com.sagarnileshshah.carouselmvp.ui.photodetail;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.sagarnileshshah.carouselmvp.R;
 import com.sagarnileshshah.carouselmvp.data.models.comment.Comment;
-import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosRecyclerAdapter;
 
 import java.util.List;
 

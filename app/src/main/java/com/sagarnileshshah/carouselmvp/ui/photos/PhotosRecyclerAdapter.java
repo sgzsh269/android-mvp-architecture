@@ -1,4 +1,4 @@
-package com.sagarnileshshah.carouselmvp.presentation.photos;
+package com.sagarnileshshah.carouselmvp.ui.photos;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

@@ -1,4 +1,4 @@
-package com.sagarnileshshah.carouselmvp.presentation.photodetail;
+package com.sagarnileshshah.carouselmvp.ui.photodetail;
 
 import android.content.Context;
 

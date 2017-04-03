@@ -1,10 +1,8 @@
-package com.sagarnileshshah.carouselmvp.presentation.photodetail;
+package com.sagarnileshshah.carouselmvp.ui.photodetail;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,14 +20,10 @@ import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.sagarnileshshah.carouselmvp.R;
 import com.sagarnileshshah.carouselmvp.data.DataRepository;
-import com.sagarnileshshah.carouselmvp.data.local.LocalDataSource;
 import com.sagarnileshshah.carouselmvp.data.local.LocalDatabase;
 import com.sagarnileshshah.carouselmvp.data.models.comment.Comment;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
-import com.sagarnileshshah.carouselmvp.data.remote.RemoteDataSource;
 import com.sagarnileshshah.carouselmvp.di.Injection;
-import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosPresenter;
-import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosRecyclerAdapter;
 import com.sagarnileshshah.carouselmvp.util.BaseFragmentInteractionListener;
 import com.sagarnileshshah.carouselmvp.util.EndlessRecyclerViewScrollListener;
 import com.sagarnileshshah.carouselmvp.util.Properties;
@@ -48,7 +40,7 @@ import static com.sagarnileshshah.carouselmvp.util.Properties.PHOTO_URL;
 
 /**
  * The {@link Fragment} that receives photo data from
- * {@link com.sagarnileshshah.carouselmvp.presentation.photos.PhotosFragment}
+ * {@link com.sagarnileshshah.carouselmvp.ui.photos.PhotosFragment}
  * via a {@link Bundle} and comment data from its
  * {@link PhotoDetailContract.Presenter}. It then renders the photo and its list of comments.
  */

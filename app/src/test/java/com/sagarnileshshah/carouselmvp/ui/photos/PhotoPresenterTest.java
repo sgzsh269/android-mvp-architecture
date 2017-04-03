@@ -1,8 +1,7 @@
-package com.sagarnileshshah.carouselmvp.presentation.photos;
+package com.sagarnileshshah.carouselmvp.ui.photos;
 
 
 import com.sagarnileshshah.carouselmvp.data.DataRepository;
-import com.sagarnileshshah.carouselmvp.data.DataRepositoryTest;
 import com.sagarnileshshah.carouselmvp.data.DataSource;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
 import com.sagarnileshshah.carouselmvp.util.threading.MainUiThread;

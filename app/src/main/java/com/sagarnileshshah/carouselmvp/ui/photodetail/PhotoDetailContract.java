@@ -1,10 +1,9 @@
-package com.sagarnileshshah.carouselmvp.presentation.photodetail;
+package com.sagarnileshshah.carouselmvp.ui.photodetail;
 
 import android.content.Context;
 
 import com.sagarnileshshah.carouselmvp.data.models.comment.Comment;
 import com.sagarnileshshah.carouselmvp.data.models.photo.Photo;
-import com.sagarnileshshah.carouselmvp.util.mvp.BaseView;
 import com.sagarnileshshah.carouselmvp.util.mvp.IBasePresenter;
 import com.sagarnileshshah.carouselmvp.util.mvp.IBaseView;
 

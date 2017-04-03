@@ -1,26 +1,15 @@
-package com.sagarnileshshah.carouselmvp.presentation;
+package com.sagarnileshshah.carouselmvp.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -28,13 +17,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import com.sagarnileshshah.carouselmvp.R;
-import com.sagarnileshshah.carouselmvp.presentation.photos.PhotosFragment;
+import com.sagarnileshshah.carouselmvp.ui.photos.PhotosFragment;
 import com.sagarnileshshah.carouselmvp.util.BaseFragmentInteractionListener;
 import com.sagarnileshshah.carouselmvp.util.FoaBaseActivity;
 import com.sagarnileshshah.carouselmvp.util.NetworkHelper;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
-import static android.view.View.GONE;
 
 /**
  * The container responsible for showing and destroying relevant {@link Fragment}, handling

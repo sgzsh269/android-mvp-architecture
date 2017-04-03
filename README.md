@@ -1,6 +1,6 @@
 ### Sample app to show basics of Model-View-Presenter (MVP) architectural pattern.
 
-### The sample app fetches and displays the current interesting photos and their comments from the [Flickr API](https://www.flickr.com/services/api/).
+### The sample app fetches and displays the interesting photos and their comments for the most recent day from the [Flickr API](https://www.flickr.com/services/api/).
 
 ### App Demo
 ![Carousel Demo](/carousel_demo.gif)
