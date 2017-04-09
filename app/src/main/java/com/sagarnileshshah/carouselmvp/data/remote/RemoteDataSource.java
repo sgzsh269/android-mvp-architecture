@@ -15,9 +15,12 @@ import java.util.Map;
  */
 public class RemoteDataSource extends DataSource {
 
-    public static final String QUERY_PARAM_PHOTO_ID = "photo_id";
     public static final String API_KEY = BuildConfig.FLICKR_API_KEY;
     public static final String BASE_API_URL = "https://api.flickr.com";
+    public static final String PHOTOS_ENDPOINT = "flickr.interestingness.getList";
+    public static final String COMMENTS_ENDPOINT = "flickr.photos.comments.getList";
+
+    public static final String QUERY_PARAM_PHOTO_ID = "photo_id";
     public static final String QUERY_PARAM_API_KEY = "api_key";
     public static final String QUERY_PARAM_METHOD = "method";
     public static final String QUERY_PARAM_NO_JSON_CALLBACK = "nojsoncallback";
@@ -27,8 +30,7 @@ public class RemoteDataSource extends DataSource {
     public static final String QUERY_PARAM_PER_PAGE = "per_page";
     public static final String QUERY_PARAM_VALUE_PER_PAGE = "10";
     public static final String QUERY_PARAM_PAGE = "page";
-    public static final String PHOTOS_ENDPOINT = "flickr.interestingness.getList";
-    public static final String COMMENTS_ENDPOINT = "flickr.photos.comments.getList";
+
 
     private static RemoteDataSource remoteDataSource;
 
