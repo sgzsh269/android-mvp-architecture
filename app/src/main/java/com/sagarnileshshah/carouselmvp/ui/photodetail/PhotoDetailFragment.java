@@ -1,5 +1,7 @@
 package com.sagarnileshshah.carouselmvp.ui.photodetail;
 
+import static com.sagarnileshshah.carouselmvp.util.Properties.PHOTO_URL;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,9 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import com.bumptech.glide.Glide;
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
@@ -36,7 +35,8 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sagarnileshshah.carouselmvp.util.Properties.PHOTO_URL;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * The {@link Fragment} that receives photo data from
@@ -143,8 +143,7 @@ public class PhotoDetailFragment extends BaseView implements PhotoDetailContract
     @Override
     public void showComments(List<Comment> comments) {
         if (comments != null) {
-            this.comments.addAll(comments);
-            recyclerAdapter.notifyItemRangeInserted(this.comments.size(), comments.size());
+            recyclerAdapter.addAll(comments);
         }
     }
 
